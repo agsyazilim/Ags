@@ -1,0 +1,140 @@
+@using Ags.Services.Common
+@{
+    Layout = "_RightColumn";
+    ViewData["Title"] = "Haberler";
+}
+@inject ISectionService SectionService
+
+@section Slider{@await Component.InvokeAsync("MainSlider").ConfigureAwait(true)}
+@section Slider1{@await Component.InvokeAsync("RigthSlider").ConfigureAwait(true)}
+@section Slider2{@await Component.InvokeAsync("RigthTwoSlider").ConfigureAwait(true)}
+
+<div class="row" data-title="MainPage">
+    <div class="col-lg-8 col-12 mb-50" data-title="MainPage">
+        @await Component.InvokeAsync("MainPage", new { name = SectionService.GetNewsSection("MainPage"), title = SectionService.GetDescription("MainPageTitle") }).ConfigureAwait(true)
+    </div>
+    <div class="col-lg-4 col-12 mb-50" data-title="RightSocialMedia">
+        @await Component.InvokeAsync("RightSocialMedia").ConfigureAwait(true)
+    </div>
+</div>
+<div class="row" data-title="MainPageDown-center-right">
+    @await Component.InvokeAsync("MainPageDown", new { name = SectionService.GetDescription("MainPageDown") }).ConfigureAwait(true)
+    @await Component.InvokeAsync("MainPageDownCenter", new { name = SectionService.GetDescription("MainPageDownCenter") }).ConfigureAwait(true)
+    @await Component.InvokeAsync("MainPageDownRight", new { name = SectionService.GetNewsSection("MainPageDownRight") }).ConfigureAwait(true)
+</div>
+<div class="row mb-50" data-title="galeriler">
+    <div class="col-12 mb-50">
+        <div class="post-block-wrapper">
+            <div class="head feature-head">
+                <h4 class="title">Galeriler</h4>
+                <ul class="post-block-tab-list feature-post-tab-list nav d-none d-md-block">
+                    <li>
+                        <a class="active" data-toggle="tab" href="#life-style-cat-1">
+                            <h4 class="title"> Foto Galeri</h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#life-style-cat-2"><h4 class="title">Video Galeri</h4></a>
+                    </li>
+                </ul>
+                <ul class="post-block-tab-list feature-post-tab-list nav d-sm-block d-md-none">
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Galeriler</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="active" data-toggle="tab" href="#life-style-cat-1">Foto Galeri</a></li>
+                            <li><a data-toggle="tab" href="#life-style-cat-2">Video Galeri</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="life-style-cat-1">
+                        @await Component.InvokeAsync("Gallery")
+                    </div>
+                    <div class="tab-pane fade" id="life-style-cat-2">
+                        @await Component.InvokeAsync("VideoGallery")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" data-title="homepagevideo-editor">
+    @await Component.InvokeAsync("HomePageVideo").ConfigureAwait(true)
+    @await Component.InvokeAsync("HomePageEditor").ConfigureAwait(true)
+</div>
+
+@section PostSectionLeft {
+    @await Component.InvokeAsync("PostSectionLeft").ConfigureAwait(true)
+}
+
+@section PostSectionRigth {
+    @await Component.InvokeAsync("PostSectionRigth").ConfigureAwait(true)
+}
+@section scripts
+    {
+    <script on-content-loaded="true">
+        $(document).ready(function() {
+            //getTopNews
+            var urlPaths = '/Catalog/PopulerSection';
+            var jqxhr = $.post(urlPaths,
+                function(data) {
+                }).done(function(data) {
+                var models = data.NewsModels;
+                $.each(models,
+                    function(i, model) {
+                        var item =
+                            `<div class="post post-small post-list post-dark popular-post"><div class="post-wrap"><a class="image" href="/haberdetay/${
+                                model.Id}/${model.SeName}">
+        <img src="${model.PictureUrl
+                                }" alt="post"></a><div class="content fix"><h5 class="title"><a href="/haberdetay/${
+                                model.Id}/${model.SeName}">${model.Title}
+        </a></h5><p>${model.Short}</p><a href="/haberdetay/${model.Id}/${model.SeName
+                                }" class="read-more">daha fazla oku</a></div></div></div>`;
+                        $('#example').append(item);
+                    });
+
+            }).fail(function() {}
+            ).always(function() {
+                /*-- Popular Post Slider --*/
+                $('.popular-post-slider').slick({
+                    arrows: false,
+                    autoplay: true,
+                    autoplaySpeed: 5000,
+                    pauseOnFocus: false,
+                    pauseOnHover: false,
+                    infinite: true,
+                    slidesToShow: 3,
+                    responsive: [
+                        {
+                            breakpoint: 1199,
+                            settings: {
+                                slidesToShow: 2,
+                            }
+                        },
+                        {
+                            breakpoint: 991,
+                            settings: {
+                                slidesToShow: 2,
+                            }
+                        },
+                        {
+                            breakpoint: 767,
+                            settings: {
+                                slidesToShow: 1,
+                            }
+                        }
+                    ]
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript" on-content-loaded="true">
+
+        //setTimeout(function() {
+        //        location.reload(true);
+        //    },
+        //    30000);
+    </script>
+}

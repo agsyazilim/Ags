@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.8.12" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Templates\**" />
+    <Compile Remove="wwwroot\lib\fancybox\**" />
+    <Content Remove="Templates\**" />
+    <Content Remove="wwwroot\lib\fancybox\**" />
+    <EmbeddedResource Remove="Templates\**" />
+    <EmbeddedResource Remove="wwwroot\lib\fancybox\**" />
+    <None Remove="Templates\**" />
+    <None Remove="wwwroot\lib\fancybox\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\lib\fonts\ionicons\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ags.Web.Framework\Ags.Web.Framework.csproj" />
+  </ItemGroup>
+
+</Project>

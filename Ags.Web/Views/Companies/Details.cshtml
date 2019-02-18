@@ -1,0 +1,39 @@
+﻿@model CompanyDetailModel
+@{
+    ViewData["Title"] = Model.Name;
+    Layout = "_OneColumnClear";
+}
+<div class="single-blog mb-50" data-title="CompaniesDetails">
+    <div class="blog-wrap">
+        <div class="meta fix">
+            <a href="#" class="meta-item category fashion">@Model.CategoryName</a>
+            <span class="meta-item date"><i class="fa fa-clock-o"></i>@Model.StartDate.ToString("d")</span>
+        </div>
+        <h3 class="title">@Model.Name</h3>
+        <div class="image"><img src="@Model.PictureUrl" alt="post"></div>
+        <div class="content">
+            @Model.Description
+            @if (!string.IsNullOrEmpty(Model.VideoEmbedCode))
+            {
+                <a href="@Model.VideoEmbedCode" class="image video-popup" tabindex="0">
+                    <img src="@Model.PictureUrl" alt="post">
+                    <span class="video-btn"><i class="fa fa-play"></i></span>
+                </a>
+
+            }
+        </div>
+        <div class="tags-social float-left">
+            <ul>
+                <li>Adres :@Model.Address</li>
+                <li>Şehir :@Model.City</li>
+                <li>Telefon:@Model.Phone</li>
+                <li>Gsm  :@Model.Gsm</li>
+                <li>Fax :@Model.Fax</li>
+                <li>Web Sitesi :@Model.Www</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section CompanyCategori{
+    @await Component.InvokeAsync("CompanyCategory").ConfigureAwait(false)}

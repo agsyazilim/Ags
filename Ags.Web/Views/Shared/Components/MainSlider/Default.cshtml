@@ -1,0 +1,49 @@
+﻿
+<div class="post-carousel-1" data-title="MainSlider" id="main-slider"></div>
+
+<script on-content-loaded="true">
+    $(document).ready(function () {
+        //getPopulerNews
+        var urlPaths = '/Common/GetMainSlider';
+        $("#wait").css("display", "block");
+        var jqxhr = $.post(urlPaths, function (data) {
+
+        }).done(function (data) {
+            var models = data;
+            $.each(models,
+                function (i, model) {
+                    var item = `<div class="post post-large post-overlay hero-post"><div class="post-wrap"><div class="image">
+                                <img src="${model.PictureUrl}" width="584" height="444" class="img-responsive" alt="post">
+                                </div><div class="content"><h2 class="title"><a href="/haberdetay/${model.Id}/${model.SeName}">${model.Title}</a>
+                               </h2></div></div></div>`;
+                    $('#main-slider').append(item);
+                });
+        }).fail(function () { }
+        ).always(function () {
+
+        });
+        jqxhr.complete(function () {
+            $("#wait").css("display", "none");
+            /*-- Post Carousel --*/
+            $('.post-carousel-1').slick({
+                autoplay: true,
+                autoplaySpeed: 5000,
+                pauseOnFocus: false,
+                pauseOnHover: false,
+                infinite: true,
+                slidesToShow: 1,
+                prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+                nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
+                responsive: [
+                    {
+                        breakpoint: 350,
+                        settings: {
+                            arrows: false,
+                        }
+                    }
+                ]
+            });
+        });
+
+    });
+</script>

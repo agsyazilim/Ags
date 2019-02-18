@@ -1,0 +1,51 @@
+﻿@using Ags.Web.Infrastructure
+@model CategoriModel
+@foreach (var item in Model.NewsModels)
+{
+    <div class="post post-small post-list post-dark popular-post" data-title="PopulerSection">
+        <div class="post-wrap">
+            <a class="image" href="@Url.Action("Index", "News", new {id = item.Id, title = item.SeName})">
+                <img src="@item.PictureUrl" width="124" height="150" alt="post">
+            </a>
+            <div class="content fix">
+                <h5 class="title"><a href="@Url.Action("Index","News",new{id=item.Id,title=item.SeName})">@item.Title</a></h5>
+                <p>@item.CategoryName.Chop("50")</p>
+                <a href="@Url.Action("Index","News",new{id=item.Id,title=item.SeName})" class="read-more">devamını oku</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script on-content-loaded="true">
+    /*-- Popular Post Slider --*/
+    $('.popular-post-slider').slick({
+        arrows: false,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        pauseOnFocus: false,
+        pauseOnHover: false,
+        infinite: true,
+        slidesToShow: 3,
+        responsive: [
+            {
+                breakpoint: 1199,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 991,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 767,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+        ]
+    });
+</script>

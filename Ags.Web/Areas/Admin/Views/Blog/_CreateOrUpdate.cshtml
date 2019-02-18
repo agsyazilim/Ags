@@ -1,0 +1,14 @@
+﻿@model BlogPostModel
+
+<div asp-validation-summary="All"></div>
+<input asp-for="Id" type="hidden" />
+
+<div class="content">
+    <div class="form-horizontal">
+        <ags-tabs id="blog-post-edit">
+            <ags-tab asp-name="tab-info" asp-title="Makale" asp-default="true">@await Html.PartialAsync("_CreateOrUpdate.Info", Model)</ags-tab>
+            <ags-tab asp-name="tab-seo" asp-title="SEO">@await Html.PartialAsync("_CreateOrUpdate.SEO", Model)</ags-tab>
+        </ags-tabs>
+    </div>
+</div>
+

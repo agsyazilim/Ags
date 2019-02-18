@@ -1,0 +1,199 @@
+﻿@model NewsItemModel
+
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="PictureId" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="PictureId" asp-required="true" />
+                    <span asp-validation-for="PictureId"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="Title" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="Title" asp-required="true" />
+                    <span asp-validation-for="Title"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="Short" />
+                </div>
+                <div class="col-md-9">
+                    <ags-textarea asp-for="Short" asp-required="true" />
+                    <span asp-validation-for="Short"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="Full" />
+                </div>
+                <div class="col-md-9">
+                    <div class="input-group input-group-required">
+                        <ags-editor asp-for="Full" asp-template="RichEditor" />
+                        <div class="input-group-btn">
+                            <nop-required />
+                        </div>
+                    </div>
+                    <span asp-validation-for="Full"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="CustomerId" />
+                </div>
+                <div class="col-md-9">
+                    <ags-select asp-for="CustomerId" asp-items="Model.AvailableEditors"/>
+                    <span asp-validation-for="CustomerId"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="SelectedCategoryIds" />
+                </div>
+                <div class="col-md-9">
+                    <ags-select asp-for="SelectedCategoryIds" asp-items="Model.AvailableCategories" asp-multiple="true"/>
+                    <span asp-validation-for="SelectedCategoryIds"></span>
+                </div>
+            </div>
+            <div class="form-group" style="display: none">
+                <div class="col-md-3">
+                    <ags-label asp-for="VideoId" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="VideoId" />
+                    <span asp-validation-for="VideoId"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="VideoEmbedCode" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="VideoEmbedCode"  asp-template="RichEditor"/>
+                    <span asp-validation-for="VideoEmbedCode"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="NoTitle" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="NoTitle" />
+                    <span asp-validation-for="NoTitle"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="MainBanner" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="MainBanner" />
+                    <span asp-validation-for="MainBanner"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="LastNews" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="LastNews" />
+                    <span asp-validation-for="LastNews"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="SecondBanner" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="SecondBanner" />
+                    <span asp-validation-for="SecondBanner"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="UpBanner" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="UpBanner" />
+                    <span asp-validation-for="UpBanner"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="FlashNews" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="FlashNews" />
+                    <span asp-validation-for="FlashNews"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="BigNews" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="BigNews" />
+                    <span asp-validation-for="BigNews"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AllowComments" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="AllowComments" />
+                    <span asp-validation-for="AllowComments"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="StartDate" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="StartDate" />
+                    <span asp-validation-for="StartDate"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="EndDate" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="EndDate" />
+                    <span asp-validation-for="EndDate"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="Published" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="Published" />
+                    <span asp-validation-for="Published"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="Approve" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="Approve" />
+                    <span asp-validation-for="Approve"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+       
+  @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }

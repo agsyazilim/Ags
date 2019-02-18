@@ -1,0 +1,238 @@
+﻿@using System.Text.Encodings.Web
+@using Ags.Services.Common
+@model Ags.Web.Areas.Admin.Models.Media.Slider.SliderSearchModel
+@inject ISectionService SectionService
+@{
+
+    ViewBag.Title = "Galeri Ekle";
+}
+<ags-antiforgery-token />
+
+<form asp-controller="PhotoGalleries" asp-action="List" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Yeni Ekle
+        </h1>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel panel-default panel-search">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group" @(Model.AvailableGalleries.SelectionIsNotPossible() ? Html.Raw("style=\"display:none\"") : null)>
+                            <div class="col-md-4">
+                                <ags-label asp-for="SearchGalleryId" />
+                            </div>
+                            <div class="col-md-8">
+                                <ags-select asp-for="SearchGalleryId" asp-items="Model.AvailableGalleries" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <ags-label asp-for="SearchName" />
+                            </div>
+                            <div class="col-md-8">
+                                <ags-editor asp-for="SearchName" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-5">
+                            <button type="button" id="search-products" class="btn btn-primary btn-search">
+                                <i class="fa fa-search"></i>
+                                Galeri Ara 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="settings-grid"></div>
+                    <script>
+                        $(document).ready(function() {
+                            $("#settings-grid").kendoGrid({
+                                dataSource: {
+                                    type: "json",
+                                    transport: {
+                                        read: {
+                                            url: "@Html.Raw(Url.Action("GalleryList", "Sliders"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: function() {
+                                                var data = {
+                                                    SearchGalleryId: $('#@Html.IdFor(model => model.SearchGalleryId)').val(),
+                                                    SearchGalleryName: $('#@Html.IdFor(model => model.SearchName)').val()
+                                                };
+                                                addAntiForgeryToken(data);
+                                                return data;
+                                            }
+                                        },
+                                        create: {
+                                            url: "@Html.Raw(Url.Action("GalleryCreate", "Sliders"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: addAntiForgeryToken
+                                        },
+                                        update: {
+                                            url: "@Html.Raw(Url.Action("GalleryEdit", "Sliders"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: addAntiForgeryToken
+                                        },
+                                        destroy: {
+                                            url: "@Html.Raw(Url.Action("GalleryDelete", "Sliders"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: addAntiForgeryToken
+                                        }
+                                    },
+                                    schema: {
+                                        data: "Data",
+                                        total: "Total",
+                                        errors: "Errors",
+                                        model: {
+                                            id: "Id",
+                                            fields: {
+                                                Name: { editable: true, type: "string" },
+                                                DisplayOrder: { editable: true, type: "number" },
+                                                Published: { editable: true, type: "boolean" },
+                                                Section: { editable: true, type: "string" },
+                                                SectionId: {editable:true,type:"number"},
+                                                Id: { editable: false, type: "number" }
+                                            }
+                                        }
+                                    },
+                                    requestEnd: function(e) {
+                                        if (e.type == "create" || e.type == "update") {
+                                            this.read();
+                                        }
+                                    },
+                                    error: function(e) {
+                                        display_kendoui_grid_error(e);
+                                        // Cancel the changes
+                                        this.cancelChanges();
+                                    },
+                                    pageSize: @(Model.PageSize),
+                                    serverPaging: true,
+                                    serverFiltering: true,
+                                    serverSorting: true
+                                },
+                                pageable: {
+                                    refresh: true,
+                                    pageSizes: [@(Model.AvailablePageSizes)],
+                                    @await Html.PartialAsync("_GridPagerMessages")
+                                },
+                                toolbar: [{ name: "create", text: "Ekle" }],
+                                editable: {
+                                    confirmation: "Bu öğeyi silmek istediğinizden emin misiniz?",
+                                    mode: "inline"
+                                },
+                                scrollable: false,
+                                columns: [
+                                    {
+                                        field: "Name",
+                                        title: "Adı",
+                                        width: 300
+                                    }, {
+                                        field: "DisplayOrder",
+                                        title: "Sırası",
+                                        width: 300
+                                    }, {
+                                        field: "Published",
+                                        title: "Yayında",
+                                        width: 150,
+                                        headerAttributes: { style: "text-align:center" },
+                                        attributes: { style: "text-align:center" },
+                                        template: '# if(Published) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                    },
+                                    {
+                                        field: "SectionId",
+                                        title: "Bölge Adı",
+                                        width: 150,
+                                        editor: storeDropDownEditor,
+                                        template: "#:Section#"
+                                    },
+                                    {
+                                        field: "Id",
+                                        title: "Resim Ekle",
+                                        width: 100,
+                                        headerAttributes: { style: "text-align:center" },
+                                        attributes: { style: "text-align:center" },
+                                        template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Resim Ekle</a>'
+                                    },
+                                    {
+                                        command: [
+                                            {
+                                                name: "edit",
+                                                text: {
+                                                    edit: "Düzenle",
+                                                    update: "Güncelle",
+                                                    cancel: "Vazgeç"
+                                                }
+                                            }, {
+                                                name: "destroy",
+                                                text: "Sil"
+                                            }
+                                        ],
+                                        width: 200
+                                    }
+                                ]
+                            });
+                        });
+                        //local datasource
+                        var allStores = [
+                            {
+                                Id: 0,
+                                Name: "Tüm Bölgeler"
+                            }
+                            @{
+                                var allStores = SectionService.GetAllSection();
+                            }
+                            @foreach (var store in allStores)
+                            {
+                                <text>
+                                    , {
+                                        Id: @(store.Id),
+                                        Name: "@(Html.Raw(JavaScriptEncoder.Default.Encode(store.Name)))"
+                                    }
+                                </text>
+                            }
+                        ];
+
+                        function storeDropDownEditor(container, options) {
+                            $('<input required data-text-field="Name" data-value-field="Id" data-bind="value:SectionId"/>')
+                                .appendTo(container)
+                                .kendoDropDownList({
+                                    autoBind: false,
+                                    dataSource: allStores
+                                });
+                        }
+                    </script>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('#search-settings').click(function() {
+                                var grid = $('#settings-grid').data('kendoGrid');
+                                grid.dataSource.page(1);
+                                return false;
+                            });
+                        });
+
+                        $("".concat("#@Html.IdFor(model => model.SearchGalleryId),",
+                            "#@Html.IdFor(model => model.SearchName)")).keydown(function(event) {
+                                if (event.keyCode === 13) {
+                                    $("#search-settings").click();
+                                    return false;
+                                }
+                            });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>

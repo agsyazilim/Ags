@@ -1,0 +1,74 @@
+﻿@model Ags.Data.Domain.Stores.Store
+
+@{
+
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3>Silmek istediğinizden Eminminiz?</h3>
+            </div>
+            <div class="box-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Url)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Url)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SslEnabled)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.SslEnabled)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Hosts)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Hosts)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DisplayOrder)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DisplayOrder)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CompanyName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CompanyName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CompanyAddress)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CompanyAddress)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CompanyPhoneNumber)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CompanyPhoneNumber)
+                    </dd>
+                </dl>
+
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="submit" value="Sil" class="btn btn-default" /> |
+                    <a asp-action="Index">Listeye Geri Dön</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,28 @@
+﻿<div class="footer-widget col-xl-4 col-md-6 col-12 mb-60" data-title="PopulerNews">
+    <h4 class="widget-title">Popüler Haberler</h4>
+    <div id="populer-news"></div>
+</div>
+
+<script on-content-loaded="true">
+    //getPopulerNews
+    var urlPaths = '/News/PopulerNews';
+    var jqxhr = $.post(urlPaths,
+        function(data) {
+        }).done(function(data) {
+        var models = data;
+        $.each(models,
+            function(i, model) {
+                var item = `<div class="footer-widget-post"><div class="post-wrap">
+                                <a href="/haberdetay/${model.Id}/${model.URLPath}" class="image">
+                                <img src="${model.AvatarURL}" alt="Post"></a>
+                                  <div class="content"><h5 class="title"><a href="/haberdetay/${model.Id}/${model
+                    .URLPath}">${model.ShortDesc}</a></h5>
+                                  <div class="meta fix"><span class="meta-item date"><i class="fa fa-clock-o"></i>${
+                    model.TimeSpan}</span>
+                                </div></div></div></div>`;
+                $('#populer-news').append(item);
+            });
+
+    }).fail(function() {}
+    ).always(function() {});
+</script>

@@ -1,0 +1,107 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title|Kınık Haber</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <environment names="Development">
+        <link rel="stylesheet" href="~/tema/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/tema/lib/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="~/lib/adminLTE/css/AdminLTE.min.css" />
+        <link rel="stylesheet" href="~/lib/fineuploader/fine-uploader.min.css" type="text/css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/tema/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/tema/lib/font-awesome/css/font-awesome.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/adminLTE/css/AdminLTE.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/fineuploader/fine-uploader.min.css" type="text/css" />
+    </environment>
+    <environment names="Development">
+        <script src="/tema/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/fineuploader/jquery.fine-uploader.min.js" type="text/javascript" ></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="/tema/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/fineuploader/jquery.fine-uploader.min.js" type="text/javascript" ></script>
+    </environment>
+</head>
+<body class="hold-transition register-page">
+    <div class="register-box">
+        <div class="register-logo">
+            <a href="/" class="logo">
+                <img src="/tema/img/logo.png" alt="Logo" width="260" height="90">
+            </a>
+        </div>
+        <div class="register-box-body">
+            <p class="login-box-msg">Yeni Hesap Oluştur.</p>
+            <form id="ccSelectForm" asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group has-feedback">
+                    <ags-editor asp-for="AvatarId" />
+                    <span asp-validation-for="AvatarId" class="text-danger"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input asp-for="FirstName" class="form-control" placeholder="Ad" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input asp-for="LastName" class="form-control" placeholder="Soyad" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input asp-for="Email" class="form-control" placeholder="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input asp-for="Password" class="form-control" placeholder="Şifreniz" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Şifreniz Tekrar" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Kayıt</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+
+            </form>
+            @*<div class="social-auth-links text-center">
+                    <p>- OR -</p>
+                    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
+                        <i class="fa fa-facebook"></i> Sign up using
+                        Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+                        <i class="fa fa-google-plus"></i> Sign up using
+                        Google+
+                    </a>
+                </div>*@
+
+            <a asp-controller="Account" asp-action="Login" asp-area="" class="text-center">Zaten Üyeyim</a>
+        </div>
+    </div>
+
+</body>
+</html>
+
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial").ConfigureAwait(false); }
+

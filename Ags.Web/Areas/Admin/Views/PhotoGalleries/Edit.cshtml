@@ -1,0 +1,23 @@
+﻿@model Ags.Web.Areas.Admin.Models.Media.Galery.PhotoGalleryModel
+
+<form asp-controller="PhotoGalleries" asp-action="Edit" method="post" id="photo-form">
+    <div class="content-header clearfix">
+
+
+    </div>
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-12 clearfix">
+
+
+                </div>
+            </div>
+            <ags-tabs id="photo-edit">
+                <ags-tab asp-name="tab-info" asp-title="Resim Yükle" asp-default="true">
+                    @await Html.PartialAsync("_CreateOrUpdate",Model)
+                </ags-tab>
+            </ags-tabs>
+        </div>
+    </div>
+</form>

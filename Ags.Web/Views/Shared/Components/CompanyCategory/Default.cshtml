@@ -1,0 +1,16 @@
+﻿@model List<CompanyCategoriModel>
+    <div class="single-sidebar col-lg-12 col-md-6 col-12" data-title="CompanyCategory">
+        <div class="sidebar-block-wrapper">
+            <div class="head">
+                <h4 class="title">Kategoriler</h4>
+            </div>
+            <div class="body">
+                <ul class="sidebar-category">
+                    @foreach (var item in Model)
+                    {
+                        <li><a href="@Url.Action("List","Companies",new{id=item.Id})">@item.Name</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>

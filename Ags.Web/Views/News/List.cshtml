@@ -1,0 +1,65 @@
+﻿@using Ags.Web.Extensions
+@model NewsItemListModel
+@{
+    ViewBag.Title = Model.NewsItems[0].MetaTitle??"Haber Listesi";
+    ViewBag.MetaDescription = Model.NewsItems[0].MetaDescription;
+    ViewBag.MetaKeywords = Model.NewsItems[0].MetaKeywords;
+    Layout = "_BlogColumn";
+
+}
+@section Slider{}
+@section banner{
+    <div class="page-banner-section section mt-30 mb-30">
+        <div class="container">
+            <div class="row row-1">
+                <div class="col-12">
+                    <div class="page-banner" style="background-image: url(/images/uploaded/categori/asyis.jpg)">
+                        <h2>Tüm Haberler</h2>
+                        <ol class="page-breadcrumb">
+                            <li><a href="#">Anasayfa</a></li>
+                            <li class="active">Tüm Haberler</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@foreach (var item in Model.NewsItems)
+{
+    <div class="single-blog mb-50">
+        <div class="blog-wrap">
+            <div class="meta fix">
+                <a href="#" class="meta-item category">@item.CategoryName</a>
+                <a href="#" class="meta-item author"><img src="@item.AvatarUrl" alt="post author">@item.CustomerName</a>
+                <span class="meta-item date"><i class="fa fa-clock-o"></i>@item.CreatedOn.ToString("d")</span>
+            </div>
+            <h3 class="title"><a href="@Url.Action("Index","News",new{id=item.Id,title=item.SeName})">@item.Title</a></h3>
+            <a href="@Url.Action("Index", "News", new {id = item.Id, title = item.SeName})" class="image">
+                <img src="@item.PictureUrl" alt="post">
+            </a>
+            <div class="content">
+                @item.Short
+                <a href="@Url.Action("Index", "News", new {id = item.Id, title = item.SeName})" class="read-more">devamını oku</a>
+            </div>
+        </div>
+    </div>
+}
+@{
+    var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+}
+@if (!pager.IsEmpty())
+{
+      <div class="pager">
+        @pager
+    </div>
+}
+@section Right{
+    @await Component.InvokeAsync("RightSocialMedia").ConfigureAwait(false)
+}
+@section PostSectionLeft{
+    @await Component.InvokeAsync("PostSectionLeft").ConfigureAwait(false)
+}
+@section PostSectionRigth {
+    @await Component.InvokeAsync("PostSectionRigth").ConfigureAwait(false)
+}

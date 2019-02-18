@@ -1,0 +1,12 @@
+﻿@model PollModel
+
+<div class="single-sidebar col-lg-12 col-md-6 col-12" data-title="PollBlock">
+    <div class="sidebar-block-wrapper">
+        <div class="head feature-head">
+            <h4 class="title">@Model.Name</h4>
+        </div>
+        <div class="body">
+            @await Html.PartialAsync("_Poll",Model).ConfigureAwait(false)
+        </div>
+    </div>
+</div>

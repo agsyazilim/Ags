@@ -1,0 +1,35 @@
+﻿@using Ags.Web.Framework.UI
+@model ActivityLogContainerModel
+
+
+@{
+    //page title
+    ViewBag.Title = "ActivityLog";
+    //active menu item (system name)
+    Html.SetActiveMenuItemSystemName("Activity log");
+}
+
+<ags-antiforgery-token />
+
+<form asp-controller="ActivityLog" asp-action="ListTypes" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+           ActivityLog
+        </h1>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <ags-tabs id="activity-log-tabs">
+                <ags-tab asp-name="activity-log-logs" asp-title="ActivityLog" asp-default="true">
+                    @await Html.PartialAsync("_List.Logs", Model.ListLogs)
+                </ags-tab>
+                <ags-tab asp-name="activity-log-types" asp-title="ActivityLogType">
+                    @await Html.PartialAsync("_List.LogTypes", Model.ListTypes)
+                </ags-tab>
+            </ags-tabs>
+        </div>
+    </div>
+
+
+</form>

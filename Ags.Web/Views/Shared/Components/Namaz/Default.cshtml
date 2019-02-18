@@ -1,0 +1,80 @@
+﻿@model NamazVakitModel
+<div class="single-sidebar col-lg-12 col-md-6 col-12" data-title="Namaz">
+    <div class="sidebar-block-wrapper">
+        <div class="head feature-head">
+            <h4 class="title">NAMAZ VAKİTLERİ</h4>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div id="namaz-table" class="widget-right weather-right--type1 widget-right--brown">
+                    <div class="widget-right__header widget-right__header--brown">
+                        <div class="widget-right__layout">
+                            <ags-select asp-for="SehirId" asp-items="Model.Sehirlers" />
+                        </div>
+                        <div class="namaz-body">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <img src="/images/imsak.png" />
+                                    <p class="mt-10 title">imsak</p>
+                                    <hr />
+                                    <p class="mt-10 title" id="imsak">6:30</p>
+                                </div>
+                                <div class="col-4">
+                                    <img src="/images/gunes.png" />
+
+                                    <p class="mt-10 title">Güneş</p>
+                                    <hr />
+                                    <p class="mt-10 title" id="gunes">9:30</p>
+                                </div>
+                                <div class="col-4">
+                                    <img src="/images/ogle.png" />
+                                    <p class="mt-10 title">Öğlen</p>
+                                    <hr />
+                                    <p class="mt-10 title" id="oglen">13:34</p>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-4">
+                                    <img src="/images/ikindi.png" />
+                                    <p class="mt-10 title">ikindi</p>
+                                    <hr />
+                                    <p class="mt-10 title" id="ikindi">16:15</p>
+                                </div>
+                                <div class="col-4">
+                                    <img src="/images/aksam.png" />
+                                    <p class="mt-10 title">Akşam</p>
+                                    <hr />
+                                    <p class="mt-10 title" id="aksam">18:32</p>
+                                </div>
+                                <div class="col-4">
+                                    <img src="/images/yatsi.png" />
+                                    <p class="mt-10 title">Yatsı</p>
+                                    <hr />
+                                    <p class="mt-10 title" id="yatsi">20:02</p>
+                                </div>
+                            </div>
+                            <div class="widget-right__footer widget-right__footer--brown">
+                                <div class="widget-right__footer">
+                                    <div class="widget-right__layout">
+                                        <p class="mt-10 mb-10 title">@DateTime.Now.ToLongDateString()</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" on-content-loaded="true">
+
+    $(document).ready(function() {
+        $("#SehirId option").each(function () {
+            if ($(this).val() === "izmir")
+                $(this).attr("selected", "true");
+        });
+
+    });
+</script>

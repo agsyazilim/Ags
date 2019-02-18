@@ -1,0 +1,24 @@
+﻿@model Ags.Data.Domain.Common.Notice
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form asp-action="Edit" class="form-horizontal">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Yeni Ekle
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a asp-action="Index">Listeye Dön</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Kaydet
+            </button>
+        </div>
+    </div>
+@await Html.PartialAsync("_CreateOrUpdate", Model)
+ </form>

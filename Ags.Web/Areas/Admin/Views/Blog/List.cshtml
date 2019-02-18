@@ -1,0 +1,33 @@
+﻿@model BlogContentModel
+
+
+@{
+    //page title
+    ViewBag.Title = "Blog";
+    //active menu item (system name)
+}
+
+<ags-antiforgery-token />
+
+<form asp-controller="Blog" asp-action="List" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Köşe Yazıları
+        </h1>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <ags-tabs id="blog-tabs">
+                <ags-tab asp-name="blog-posts" asp-title="Köşe Yazıları" asp-default="true">
+                    @await Html.PartialAsync("_List.BlogPosts", Model.BlogPosts)
+                </ags-tab>
+                <ags-tab asp-name="blog-comments" asp-title="Yorumlar">
+                    @await Html.PartialAsync("_List.Comments", Model.BlogComments)
+                </ags-tab>
+            </ags-tabs>
+        </div>
+    </div>
+
+
+</form>

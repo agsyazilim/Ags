@@ -1,0 +1,133 @@
+﻿@model ENewsItemSearchModel
+
+ @Html.AntiForgeryToken()
+<div class="content-header clearfix">
+    <div class="pull-right">
+        <a asp-action="Create" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            Yeni Ekle
+        </a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default panel-search">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group" @(Model.AvailableCategories.SelectionIsNotPossible() ? Html.Raw("style=\"display:none\"") : null)>
+                            <div class="col-md-4">
+                                <ags-label asp-for="SearchCategoryId" />
+                            </div>
+                            <div class="col-md-8">
+                                <ags-select asp-for="SearchCategoryId" asp-items="Model.AvailableCategories" />
+                            </div>
+                        </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <ags-label asp-for="CreatedOnTo" />
+                                </div>
+                                <div class="col-md-8">
+                                    <ags-editor asp-for="CreatedOnTo" />
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-5">
+                            <button type="button" id="search-products" class="btn btn-primary btn-search">
+                                <i class="fa fa-search"></i>
+                                E-Gazete Ara
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="newsitem-grid"></div>
+                        <script>
+                        $(document).ready(function() {
+                            $("#newsitem-grid").kendoGrid({
+                                dataSource: {
+                                    type: "json",
+                                    transport: {
+                                        read: {
+                                            url: "@Html.Raw(Url.Action("List", "EnewsPapers"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: function() {
+                                                var data = {
+                                                };
+                                                addAntiForgeryToken(data);
+                                                return data;
+                                            }
+                                        }
+                                    },
+                                    schema: {
+                                        data: "Data",
+                                        total: "Total",
+                                        errors: "Errors"
+                                    },
+                                    error: function(e) {
+                                        display_kendoui_grid_error(e);
+                                        // Cancel the changes
+                                        this.cancelChanges();
+                                    },
+                                    pageSize: @(Model.PageSize),
+                                    serverPaging: true,
+                                    serverFiltering: true,
+                                    serverSorting: true
+                                },
+                                pageable: {
+                                    refresh: true,
+                                    pageSizes: [@(Model.AvailablePageSizes)],
+                                    @await Html.PartialAsync("_GridPagerMessages")
+                                },
+                                editable: {
+                                    confirmation: "DeleteConfirmation",
+                                    mode: "inline"
+                                },
+                                scrollable: false,
+                                columns: [
+                                    {
+                                        field: "Name",
+                                        title: "E-Gazete"
+                                    }
+                                    , {
+                                        field: "Categori",
+                                        title: "Kategori"
+                                    }, {
+                                        field: "Id",
+                                        title: "Düzenle",
+                                        width: 100,
+                                        headerAttributes: { style: "text-align:center" },
+                                        attributes: { style: "text-align:center" },
+                                        template:
+                                            '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Düzenle</a>'
+                                    }
+                                ]
+                            });
+                        });
+                        </script>
+
+                        <script>
+                            $(document).ready(function () {
+                                //search button
+                                $('#search-newsitem').click(function () {
+                                    //search
+                                    var grid = $('#newsitem-grid').data('kendoGrid');
+                                    grid.dataSource.page(1); //new search. Set page size to 1
+                                    //grid.dataSource.read(); we already loaded the grid above using "page" function
+                                    return false;
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

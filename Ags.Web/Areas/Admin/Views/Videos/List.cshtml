@@ -1,0 +1,183 @@
+﻿@model VideoKategoriSearchModel
+@{
+
+    ViewBag.Title = "Galeri Ekle";
+}
+<ags-antiforgery-token />
+
+<form asp-controller="Videos" asp-action="List" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Yeni Ekle
+        </h1>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel panel-default panel-search">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group" @(Model.AvailableVideoCategorys.SelectionIsNotPossible() ? Html.Raw("style=\"display:none\"") : null)>
+                            <div class="col-md-4">
+                                <ags-label asp-for="SearchCategoriId" />
+                            </div>
+                            <div class="col-md-8">
+                                <ags-select asp-for="SearchCategoriId" asp-items="Model.AvailableVideoCategorys" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 col-md-offset-5">
+                            <button type="button" id="search-products" class="btn btn-primary btn-search">
+                                <i class="fa fa-search"></i>
+                                Galeri Ara
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="settings-grid"></div>
+                    <script>
+                        $(document).ready(function() {
+                            $("#settings-grid").kendoGrid({
+                                dataSource: {
+                                    type: "json",
+                                    transport: {
+                                        read: {
+                                            url: "@Html.Raw(Url.Action("GalleryList", "Videos"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: function() {
+                                                var data = {
+                                                    SearchCategoriId: $('#@Html.IdFor(model => model.SearchCategoriId)').val()
+
+                                                };
+                                                addAntiForgeryToken(data);
+                                                return data;
+                                            }
+                                        },
+                                        create: {
+                                            url: "@Html.Raw(Url.Action("GalleryCreate", "Videos"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: addAntiForgeryToken
+                                        },
+                                        update: {
+                                            url: "@Html.Raw(Url.Action("GalleryEdit", "Videos"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: addAntiForgeryToken
+                                        },
+                                        destroy: {
+                                            url: "@Html.Raw(Url.Action("GalleryDelete", "Videos"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: addAntiForgeryToken
+                                        }
+                                    },
+                                    schema: {
+                                        data: "Data",
+                                        total: "Total",
+                                        errors: "Errors",
+                                        model: {
+                                            id: "Id",
+                                            fields: {
+                                                Name: { editable: true, type: "string" },
+                                                Published: { editable: true, type: "boolean" },
+                                                Id: { editable: false, type: "number" }
+                                            }
+                                        }
+                                    },
+                                    requestEnd: function(e) {
+                                        if (e.type == "create" || e.type == "update") {
+                                            this.read();
+                                        }
+                                    },
+                                    error: function(e) {
+                                        display_kendoui_grid_error(e);
+                                        // Cancel the changes
+                                        this.cancelChanges();
+                                    },
+                                    pageSize: @(Model.PageSize),
+                                    serverPaging: true,
+                                    serverFiltering: true,
+                                    serverSorting: true
+                                },
+                                pageable: {
+                                    refresh: true,
+                                    pageSizes: [@(Model.AvailablePageSizes)],
+                                    @await Html.PartialAsync("_GridPagerMessages")
+                                },
+                                toolbar: [{ name: "create", text: "Ekle" }],
+                                editable: {
+                                    confirmation: "Bu öğeyi silmek istediğinizden emin misiniz?",
+                                    mode: "inline"
+                                },
+                                scrollable: false,
+                                columns: [
+                                    {
+                                        field: "Name",
+                                        title: "Adı",
+                                        width: 300
+                                    },  {
+                                        field: "Published",
+                                        title: "Yayında",
+                                        width: 150,
+                                        headerAttributes: { style: "text-align:center" },
+                                        attributes: { style: "text-align:center" },
+                                        template: '# if(Published) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                    },
+                                    {
+                                        field: "Id",
+                                        title: "Video Ekle",
+                                        width: 100,
+                                        headerAttributes: { style: "text-align:center" },
+                                        attributes: { style: "text-align:center" },
+                                        template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Video Ekle</a>'
+                                    },
+                                    {
+                                        command: [
+                                            {
+                                                name: "edit",
+                                                text: {
+                                                    edit: "Düzenle",
+                                                    update: "Güncelle",
+                                                    cancel: "Vazgeç"
+                                                }
+                                            }, {
+                                                name: "destroy",
+                                                text: "Sil"
+                                            }
+                                        ],
+                                        width: 200
+                                    }
+                                ]
+                            });
+                        });
+                       </script>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('#search-settings').click(function() {
+                                var grid = $('#settings-grid').data('kendoGrid');
+                                grid.dataSource.page(1);
+                                return false;
+                            });
+                        });
+
+                        $("#@Html.IdFor(model => model.SearchCategoriId)").keydown(function(event) {
+                                if (event.keyCode === 13) {
+                                    $("#search-settings").click();
+                                    return false;
+                                }
+                            });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>

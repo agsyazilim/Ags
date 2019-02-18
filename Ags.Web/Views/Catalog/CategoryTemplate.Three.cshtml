@@ -1,0 +1,157 @@
+﻿@using Ags.Services.Common
+@using Ags.Web.Extensions
+@model CategoriModel
+@inject ISectionService SectionService
+@{
+    Layout = "_BlogColumn";
+    ViewBag.Title = Model.MetaTitle ?? Model.Name;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.MetaKeywords = Model.MetaTitle;
+
+}
+@section banner{
+        <div class="page-banner-section section mt-30 mb-30" data-title="categoryTemplateNews">
+            <div class="container">
+                <div class="row row-1">
+                    @if (!string.IsNullOrEmpty(Model.BannerLittlePicturUrl))
+                    {
+                        <div class="col-lg-8 col-12">
+                            <div class="page-banner" style="background-image: url(@Model.BannerPictureUrl)">
+                                <h2>Kategori: <span class="category-feature">@Model.Name</span></h2>
+                                <ol class="page-breadcrumb">
+                                    <li><a href="/">Anasayfa</a></li>
+                                    <li class="active">@Model.Name</li>
+                                </ol>
+                                <p>@Html.Raw(Model.Description)</p>
+                            </div>
+                        </div>
+                        <div class="page-banner-image col-lg-4 col-12 d-none d-lg-block">
+                               <img src="@Model.BannerLittlePicturUrl" width="399" height="294"/>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-12 col-12">
+                            <div class="page-banner" style="background-image: url(@Model.BannerPictureUrl)">
+                                <h2>Kategori: <span class="category-feature">@Model.Name</span></h2>
+                                <ol class="page-breadcrumb">
+                                    <li><a href="/">Anasayfa</a></li>
+                                    <li class="active">@Model.Name</li>
+                                </ol>
+                                <p>@Html.Raw(Model.Description)</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+}
+@section Slider{
+    @if (Model.SliderModel.SliderPictureModels.Count> 0)
+    {
+        <div class="page-banner-section section mt-30 mb-30" data-title="categoryTemplateThere">
+            <div class="container">
+                <div class="row row-1">
+                    <ul>
+                        @foreach (var item in Model.SliderModel.SliderPictureModels)
+                        {
+                            <li><img src="@item.PictureModel.ImageUrl" title="@Model.SeName" width="1090"/></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model.GalleryModel.PhotoGalleryModels.Count>0)
+    {
+        <div class="popular-section section bg-blue-gradient pt-50 pb-50" data-title="categoryTemplateThere">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="popular-post-slider">
+                            @foreach (var item in Model.GalleryModel.PhotoGalleryModels)
+                            {
+                                <div class="post post-overlay">
+                                    <div class="post-wrap">
+                                        <a class="image" href="@Url.Action("Index", "News", new {id = item.Id, title = item.Url})">
+                                            <img src="@item.PictureModels.ThumbImageUrl" alt="post">
+                                        </a>
+                                        <div class="content fix">
+                                             <p>@Html.Raw(Model.Description)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+@if (Model.Id > 0)
+{
+    <div class="post-block-wrapper" data-title="categoryTemplateThere">
+        <div class="body">
+            <div class="row">
+                @foreach (var item in Model.LargeNewsModels)
+                {
+                    <div class="post post-large politic-post post-separator-border col-12">
+                        <div class="post-wrap">
+                            <a class="image" href="@Url.Action("Index","News",new{title=item.SeName})">
+                                <img src="@item.PictureUrl" alt="post">
+                            </a>
+                            <div class="content">
+                                <h4 class="title">
+                                    <a href="@Url.Action("Index","News",new{id=item.Id,title=item.SeName})">
+                                        @item.Title
+                                    </a>
+                                </h4>
+
+                                <p>
+                                    @Html.Raw(item.Short)
+                                </p>
+                                <a href="@item.SeName" class="read-more">Devamını oku</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            @{
+                var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+            }
+            @if (!pager.IsEmpty())
+            {
+                <div class="pager">
+                    @pager
+                </div>
+            }
+        </div>
+    </div>
+
+}
+@section Right{
+
+    @await Component.InvokeAsync("RightCategorySocialMedia", new { categoryName = Model.Name }).ConfigureAwait(false)
+    <div class="col-lg-12 col-12 mb-50">
+        @foreach (var item in Model.VideoGalleryModel.VideoModels)
+        {
+            <div class="RYPP r16-9" data-playlist="@item.EmbedCode" data-title="categoryTemplateThere">
+                <div class="RYPP-video">
+                    <div class="RYPP-video-player"></div>
+                </div>
+                <div class="RYPP-playlist">
+                    <div class="RYPP-items customScroll"></div>
+                </div>
+            </div>
+        }
+    </div>
+}
+@section PostSectionLeft{
+    @await Component.InvokeAsync("PostSectionLeft").ConfigureAwait(false)
+}
+@section PostSectionRigth {
+    @await Component.InvokeAsync("PostSectionRigth").ConfigureAwait(false)
+}

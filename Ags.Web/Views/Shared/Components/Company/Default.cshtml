@@ -1,0 +1,42 @@
+﻿@using Ags.Web.Framework.Extensions
+@model IEnumerable<CompanyDetailModel>
+<div class="post-block-wrapper mb-50 mb-50" data-title="Company">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="head">
+                    <h4 class="title">FİRMA REHBERİ</h4> <h5 style="text-align: center">
+                        <a href="@Url.Action("List", "Companies")">TÜM FİRMALAR</a>
+                    </h5>
+                </div>
+                <div class="body">
+                    <div class="three-column-post-carousel column-post-carousel post-block-carousel  life-style-post-carousel row" id="company">
+                        @foreach (var item in Model)
+                        {
+                            <div class="post-author fix mb-50">
+                                <div class="image float-left">
+                                    <a href="@Url.Action("Details", "Companies", new {id = item.Id})">
+                                        <img src="@item.PictureUrl" alt="post-author">
+                                    </a>
+                                </div>
+                                <div class="content fix">
+                                    <h5><a href="@Url.Action("Details","Companies", new{id=item.Id})">@item.Name</a></h5>
+                                    <p>@Html.Raw(item.Description).RenderHtmlContent()</p>
+                                    <div class="social">
+
+                                        <p>@item.Phone<br/> @item.City<br/> @item.Gsm <br/>@item.Www</p>
+                                    </div>
+                            </div>
+                        </div>
+                    }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

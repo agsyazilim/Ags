@@ -1,0 +1,30 @@
+﻿@model CompanyModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<form asp-action="Delete" class="form-horizontal">
+
+     <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Sil
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a asp-action="Index" asp-controller="Companys">Listeye Dön</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-Danger">
+                <i class="fa fa-floppy-o"></i>
+                Sil
+            </button>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_Details", Model)
+    <input type="hidden" asp-for="Id" />
+</form>
+
+

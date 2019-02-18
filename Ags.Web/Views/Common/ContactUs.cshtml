@@ -1,0 +1,87 @@
+﻿@model ContactUsModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "İletişim Sayfası";
+}
+@await Component.InvokeAsync("TopicBlock", new { systemName = "ContactBanner" }).ConfigureAwait(false)
+<div class="post-section section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-12 mb-20">
+                <div class="post-block-wrapper">
+                    @await Component.InvokeAsync("TopicBlock", new { systemName = "ContactUs" }).ConfigureAwait(false)
+                    <div class="head">
+                        <h4 class="title">Mesaj Gönderin</h4>
+                    </div>
+                    <div class="body">
+                        @if (Model.SuccessfullySent)
+                        {
+                            <div class="result">
+                                <p class="form-messege">@Model.Result</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <form asp-controller="Common" asp-action="ContactUs" method="post">
+                                <div class="contact-form row">
+                                    <div asp-validation-summary="ModelOnly" class="message-error"></div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        <label for="FullName">Ad Soyad <sub>*</sub>  </label>
+                                        <input asp-for="FullName" placeholder="Adınız Soyadınız" class="fullname" />
+                                        <span asp-validation-for="FullName"></span>
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        <label for="Email"> Mail Adresi <sub>*</sub></label>
+                                        <input asp-for="Email" placeholder="Email Adresi" class="email" />
+                                        <span asp-validation-for="Email"></span>
+                                    </div>
+                                    @if (Model.SubjectEnabled)
+                                    {
+                                        <div class="col-md-12 mb-20">
+                                            <label for="Subject">Konu Başlığı <sub>*</sub></label>
+                                            <input asp-for="Subject" placeholder="Mesajınızı Başlığı" class="subject" />
+                                            <span asp-validation-for="Subject"></span>
+                                        </div>
+                                    }
+                                    <div class="col-12 mb-20">
+                                        <label for="Enquiry">Mesaj <sub>*</sub></label>
+                                        <textarea asp-for="Enquiry" placeholder="Mesajınızı Yazını" class="enquiry"></textarea>
+                                        <span asp-validation-for="Enquiry"></span>
+                                    </div>
+                                    @if (Model.DisplayCaptcha)
+                                    {
+                                        <div class="captcha-box">
+                                            <nop-captcha />
+                                        </div>
+                                    }
+
+                                    <div class="col-12">
+                                        <input type="submit" name="send-email" class="button-1 contact-us-button" value="Gönder" />
+                                    </div>
+                                </div>
+
+                            </form>
+                        }
+
+                    </div>
+                    @await Component.InvokeAsync("TopicBlock", new { systemName = "ContactMap" }).ConfigureAwait(false)
+                </div>
+                </div>
+            <div class="col-lg-4 col-12 mb-50">
+                <div class="row">
+                    @await Component.InvokeAsync("RightSocialMedia").ConfigureAwait(false)
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+@section scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial").ConfigureAwait(false);
+    }
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlZPf84AAVt8_FFN7rwQY5nPgB02SlTKs"></script>
+    <script src="/tema/map/map.js"></script>
+}

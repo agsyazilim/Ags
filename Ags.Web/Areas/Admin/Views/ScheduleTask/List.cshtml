@@ -1,0 +1,164 @@
+﻿@model ScheduleTaskSearchModel
+
+@using System.Text.Encodings.Web
+
+@{
+    //page title
+    ViewBag.Title = "Görevler";
+    //active menu item (system name)
+    Html.SetActiveMenuItemSystemName("Schedule tasks");
+}
+
+<ags-antiforgery-token />
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Zamanlanmış Görevler
+    </h1>
+    <div class="pull-right">
+        &nbsp;
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#schedule-tasks-grid").on("click", ".run-now", function (e) {
+            showThrobber('@Html.Raw(JavaScriptEncoder.Default.Encode("Progress"))');
+        });
+    });
+</script>
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>
+                        Görevler 24 Saati Geçmemelidir.
+                    </p>
+                    <p>
+                        <strong>Yeniden Başlat</strong>
+                    </p>
+                    <div id="schedule-tasks-grid"></div>
+
+                    <script>
+                        $(document).ready(function () {
+                            $("#schedule-tasks-grid").kendoGrid({
+                                dataSource: {
+                                    type: "json",
+                                    transport: {
+                                        read: {
+                                            url: "@Html.Raw(Url.Action("List", "ScheduleTask"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: addAntiForgeryToken
+                                        },
+                                        update: {
+                                            url: "@Html.Raw(Url.Action("TaskUpdate", "ScheduleTask"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: addAntiForgeryToken
+                                        }
+                                    },
+                                    schema: {
+                                        data: "Data",
+                                        total: "Total",
+                                        errors: "Errors",
+                                        model: {
+                                            id: "Id",
+                                            fields: {
+                                                Name: { editable: true, type: "string" },
+                                                Seconds: { editable: true, type: "number" },
+                                                Enabled: { editable: true, type: "boolean" },
+                                                StopOnError: { editable: true, type: "boolean" },
+                                                LastStartUtc: { editable: false, type: "date" },
+                                                LastEndUtc: { editable: false, type: "date" },
+                                                LastSuccessUtc: { editable: false, type: "date" },
+                                                Id: { editable: false, type: "number" }
+                                            }
+                                        }
+                                    },
+                                    error: function (e) {
+                                        display_kendoui_grid_error(e);
+                                        // Cancel the changes
+                                        this.cancelChanges();
+                                    },
+                                    pageSize: @(Model.PageSize),
+                                    serverPaging: true,
+                                    serverFiltering: true,
+                                    serverSorting: true
+                                },
+                                pageable: {
+                                    refresh: true,
+                                    pageSizes: [@(Model.AvailablePageSizes)],
+                                    @await Html.PartialAsync("_GridPagerMessages")
+                                },
+                                editable: {
+                                    confirmation: "Silmek İstediğinizden Eminmisiniz",
+                                    mode: "inline"
+                                },
+                                scrollable: false,
+                                columns: [{
+                                    field: "Name",
+                                    title: "Görev Adı",
+                                    width: 300
+                                }, {
+                                    field: "Seconds",
+                                    title: "Zaman",
+                                    width: 150
+                                }, {
+                                    field: "Enabled",
+                                    title: "Aktif",
+                                    width: 100,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(Enabled) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                }, {
+                                    field: "StopOnError",
+                                    title: "Hata Olduğunda Durdur",
+                                    width: 100,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(StopOnError) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                }, {
+                                    field: "LastStartUtc",
+                                    title: "Son Çalışma Başlama Zamanı",
+                                    width: 200,
+                                    type: "date",
+                                    format: "{0:G}"
+                                }, {
+                                    field: "LastEndUtc",
+                                    title: "Sona Erme Zamanı ",
+                                    width: 200,
+                                    type: "date",
+                                    format: "{0:G}"
+                                }, {
+                                    field: "LastSuccessUtc",
+                                    title: "Son Başarılı Çalışma Zamaı",
+                                    width: 200,
+                                    type: "date",
+                                    format: "{0:G}"
+                                }, {
+                                    field: "Id",
+                                    title: "Çalıştır",
+                                    width: 100,
+                                    template: '<a href="@Url.Content("~/Admin/ScheduleTask/RunNow/")#=Id#" class="btn bg-green">Çalıştır</a>'
+                                }, {
+                                    command: {
+                                        name: "edit",
+                                        text: {
+                                            edit: "Düzenle",
+                                            update: "Güncelle",
+                                            cancel: "Vazgeç"
+                                        }
+                                    },
+                                    title: "Düzenle",
+                                    width: 100
+                                }]
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

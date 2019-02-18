@@ -1,0 +1,166 @@
+﻿@{
+
+    string adminPageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title + " / " : "";
+    adminPageTitle += "Yönetim Paneli";
+}
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@adminPageTitle @Html.GetActiveMenuItemSystemName()</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/adminLTE/css/skins/_all-skins.min.css" type="text/css" />
+        <link rel="stylesheet" href="~/lib/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" type="text/css" />
+        <link rel="stylesheet" href="~/lib/typeahead/typeahead.css" type="text/css" />
+        <link rel="stylesheet" href="~/lib/fontAwesome/css/font-awesome.css" type="" />
+        <link rel="stylesheet" href="~/lib/Ionicons/css/ionicons.css" />
+        <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.10.3/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css" type="text/css" />
+        <link href="/lib/kendo/2019/style/kendo.common.min.css" rel="stylesheet" />
+        <link href="/lib/kendo/2019/style/kendo.default.min.css" rel="stylesheet" />
+        <link href="/lib/kendo/2019/style/kendo.default.mobile.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" type="text/css" />
+        <link rel="stylesheet" href="~/lib/adminLTE/css/AdminLTE.min.css" type="text/css" />
+        <link rel="stylesheet" href="~/css/admin/styles.css" type="text/css" />
+        <link rel="stylesheet" href="~/lib/fineuploader/fine-uploader.min.css" type="text/css" />
+        <link rel="stylesheet" href="~/lib/tagEditor/jquery.tag-editor.css" type="text/css" />
+
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/lib/adminLTE/css/skins/_all-skins.min.css" type="text/css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" type="text/css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/typeahead/typeahead.css" type="text/css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/fontAwesome/css/font-awesome.css" type="text/css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/Ionicons/css/ionicons.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.10.3/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css" type="text/css" asp-append-version="true" />
+        <link href="/lib/kendo/2019/style/kendo.common.min.css" rel="stylesheet" asp-append-version="true"/>
+        <link href="/lib/kendo/2019/style/kendo.default.min.css" rel="stylesheet" asp-append-version="true"/>
+        <link href="/lib/kendo/2019/style/kendo.default.mobile.min.css" rel="stylesheet" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" type="text/css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/adminLTE/css/AdminLTE.min.css" type="text/css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/admin/styles.css" type="text/css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/fineuploader/fine-uploader.min.css" type="text/css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/tagEditor/jquery.tag-editor.css" type="text/css" asp-append-version="true" />
+
+    </environment>
+    <environment names="Development">
+        <script src="~/lib/jquery/jquery-1.10.2.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+        <script src="~/lib/adminLTE/js/adminlte.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-ui/jquery-ui-1.10.3/jquery-ui-1.10.3.custom.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-migrate/jquery-migrate-1.2.1.min.js" asp-append-version="true"></script>
+        <script src="/lib/kendo/2019/js/jszip.min.js" asp-append-version="true"></script>
+        <script src="/lib/kendo/2019/js/kendo.all.min.js" asp-append-version="true"></script>
+        <script src="/lib/kendo/2019/js/cultures/kendo.culture.tr-TR.min.js" asp-append-version="true"></script>
+        <script src="/lib/kendo/2019/js/messages/kendo.messages.tr-TR.min.js" asp-append-version="true"></script>
+        <script src="~/lib/typeahead/typeahead.bundle.min.js" asp-append-version="true"></script>
+        <script src="~/js/admin.common.js" asp-append-version="true"></script>
+        <script src="~/js/admin.navigation.js" asp-append-version="true"></script>
+        <script src="~/js/admin.search.js" asp-append-version="true"></script>
+        <script src="~/lib/fineuploader/jquery.fine-uploader.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/lib/tinymce/tinymce.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/lib/tagEditor/jquery.tag-editor.min.js" asp-append-version="true"></script>
+        <script src="~/lib/tagEditor/jquery.caret.min.js" asp-append-version="true"></script>
+        <script src="~/lib/PACE/pace.min.js" asp-append-version="true"></script>
+
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/jquery-1.10.2.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/lib/adminLTE/js/adminlte.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-ui/jquery-ui-1.10.3/jquery-ui-1.10.3.custom.min.js" asp-append-version="true"></script>
+        <script src="/lib/kendo/2019/js/jszip.min.js" asp-append-version="true"></script>
+        <script src="/lib/kendo/2019/js/kendo.all.min.js" asp-append-version="true"></script>
+        <script src="/lib/kendo/2019/js/cultures/kendo.culture.tr-TR.min.js" asp-append-version="true"></script>
+        <script src="/lib/kendo/2019/js/messages/kendo.messages.tr-TR.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-migrate/jquery-migrate-1.2.1.min.js" asp-append-version="true"></script>
+        <script src="~/lib/typeahead/typeahead.bundle.min.js" asp-append-version="true"></script>
+        <script src="~/js/admin.common.js" asp-append-version="true"></script>
+        <script src="~/js/admin.navigation.js" asp-append-version="true"></script>
+        <script src="~/js/admin.search.js" asp-append-version="true"></script>
+        <script src="~/lib/fineuploader/jquery.fine-uploader.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/lib/tinymce/tinymce.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/lib/tagEditor/jquery.tag-editor.min.js" asp-append-version="true"></script>
+        <script src="~/lib/tagEditor/jquery.caret.min.js" asp-append-version="true"></script>
+        <script src="~/lib/PACE/pace.min.js" asp-append-version="true"></script>
+
+    </environment>
+
+    @RenderSection("style", required: false)
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <!-- Main Header -->
+        @await Component.InvokeAsync("Header")
+        <!-- Left side column. contains the logo and sidebar -->
+        @await Component.InvokeAsync("Sidebar")
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                @*@await Component.InvokeAsync("PageHeader")*@
+                @await Component.InvokeAsync("PageAlert")
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <!-- Your Page Content Here -->
+                @await Html.PartialAsync("Notifications")
+                @RenderBody()
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        @await Component.InvokeAsync("Footer")
+        <!-- Control Sidebar -->
+        @await Component.InvokeAsync("ControlSidebar")
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+             immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#backTop').backTop();
+            //enable tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+            var ddl = $(".k-grid-pager [data-role='dropdownlist']").data("kendoDropDownList");
+            if (ddl) {
+                ddl.bind("close", pager_close);
+
+                function pager_close(e) {
+                    e.sender.refresh();
+                }
+            }
+
+        });
+
+        kendo.culture("tr-TR");
+    </script>
+    <script>
+        var AdminLTEOptions = {
+            boxWidgetOptions: {
+                boxWidgetIcons: {
+                    collapse: 'fa-minus',
+                    open: 'fa-plus'
+                }
+            }
+        };
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<VideoModel>
+
+@if (Model.Any())
+{
+
+    <div class="popular-section section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="popular-post-slider">
+                        @foreach (var item in Model)
+                        {
+                            <div class="post feature-post">
+                                <div class="post-wrap">
+                                   <!-- Image -->
+                                    <a href="@item.EmbedCode" class="image video-popup" tabindex="0">
+                                        <img src="@(item.PictureId == 0 ? item.PictureUrl : item.ResimUrl)" alt="post">
+                                        <!-- Video Button -->
+                                        <span class="video-btn"><i class="fa fa-play"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+}
+

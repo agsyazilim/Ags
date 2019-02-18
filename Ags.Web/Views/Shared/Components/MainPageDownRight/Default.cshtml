@@ -1,0 +1,49 @@
+﻿@model IEnumerable<CategoriModel>
+@{
+    int index = 0;
+    int subindex = 0;
+}
+<div class="col-lg-4 col-md-6 col-12 mb-50" data-title="MainPageDownRigth">
+    <div class="single-sidebar">
+        <div class="sidebar-block-wrapper">
+            <div class="head education-head">
+                <div class="sidebar-tab-list education-sidebar-tab-list nav">
+                    @foreach (var item in Model)
+                    {
+                        <a class="@(index==0?"active":"")" data-toggle="tab" href="#@item.Name">@item.Name</a>
+                        index++;
+                    }
+                </div>
+            </div>
+            <div class="body">
+                <div class="tab-content">
+                    @foreach (var item in Model)
+                    {
+                        <div class="tab-pane fade show @(subindex==0?"active":"")" id="@item.Name">
+
+                            @foreach (var newsItem in item.NewsModels)
+                            {
+                                <div class="post post-small post-list education-post post-separator-border">
+                                    <div class="post-wrap">
+                                        <a class="image" href="@Url.Action("Index","News",new{id=newsItem.Id,title=newsItem.SeName})">
+                                            <img src="@newsItem.PictureUrl" alt="post">
+                                        </a>
+                                        <div class="content">
+                                            <h5 class="title">
+                                                <a href="@Url.Action("Index","News",new{id=newsItem.Id,title=newsItem.SeName})">
+                                                    @newsItem.Title
+                                                </a>
+                                            </h5>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        subindex++;
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

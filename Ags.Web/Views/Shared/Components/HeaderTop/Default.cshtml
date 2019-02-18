@@ -1,0 +1,24 @@
+﻿<div class="header-top section" data-title="HeaderTop">
+    <div class="container">
+        <div class="row">
+            <div class="header-top-links col-md-9 col-6">
+                <ul class="header-links">
+                    <li class="disabled block d-none d-md-block">
+                        <a href="#"><i class="fa fa-clock-o"></i>@DateTime.Now.ToLongDateString() </a>
+                    </li>
+                    <partial name="_LoginPartial"/>
+                    <li>
+                        <a href="@Url.Action("ContactUs", "Common")"><i class="fa fa-headphones"></i>iletişim</a>
+                    </li>
+                    @await Component.InvokeAsync("Doviz").ConfigureAwait(false)
+
+                </ul>
+            </div>
+            <div class="header-top-social col-md-3 col-6">
+                <div class="header-social">
+                    @await Component.InvokeAsync("SocialButtons").ConfigureAwait(false)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

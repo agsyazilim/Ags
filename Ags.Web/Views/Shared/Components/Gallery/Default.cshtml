@@ -1,0 +1,35 @@
+﻿@model IEnumerable<PhotoGalleryModel>
+
+@if (Model.Any())
+{
+    <div class="popular-section section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="popular-post-slider">
+                        @foreach (var item in Model)
+                        {
+                            <div class="post feature-post">
+                                <div class="post-wrap">
+                                    <a class="image" href="@Url.Action("List","Photo")">
+                                        <img src="@item.PictureModels.ImageUrl" alt="post" width="250" height="250">
+                                    </a>
+                                    <div class="content">
+                                        <h4 class="title">
+                                            <a href="#">
+                                                @item.PictureModels.Title
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+}

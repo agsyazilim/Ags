@@ -1,0 +1,36 @@
+﻿@model VideoGalleryModel
+@{
+    ViewData["Title"] = "VideoDetail";
+    Layout = "_OneColumn";
+}
+
+<div class="post-block-wrapper">
+    <div class="body">
+        <div class="row">
+            @foreach (var item in Model.VideoModels)
+            {
+                <div class="post post-overlay sports-post col-md-6 mb-20">
+                    <div class="post-wrap">
+
+                        <!-- Image -->
+                        <a href="@item.EmbedCode" class="image video-popup">
+                            <img src="@item.PictureUrl" alt="post">
+                            <!-- Video Popup -->
+                            <span class="video-btn"><i class="fa fa-play"></i></span>
+                        </a>
+
+                    </div>
+                </div>
+
+            }
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+

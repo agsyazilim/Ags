@@ -1,0 +1,255 @@
+﻿@model GeneralCommonSettingsModel
+@{
+    ViewData["Title"] = "Genel Ayarlar";
+}
+
+<form asp-controller="Settings" asp-action="GeneralCommon" method="post" enctype="multipart/form-data">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Genel Ayarlar
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Kaydet
+            </button>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <div asp-validation-summary="All"></div>
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Genel Ayarlar
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.LogoPictureId" />
+                            </div>
+                            <div class="col-md-9" id="logo-block">
+                                <ags-editor asp-for="StoreInformationSettings.LogoPictureId" />
+                                <span asp-validation-for="StoreInformationSettings.LogoPictureId"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.HeaderBannerPictureId" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.HeaderBannerPictureId" />
+                                <span asp-validation-for="StoreInformationSettings.HeaderBannerPictureId"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.WhiteLogoPictureId" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.WhiteLogoPictureId" />
+                                <span asp-validation-for="StoreInformationSettings.WhiteLogoPictureId"></span>
+                            </div>
+                        </div>
+                        <div class="form-group advanced-setting">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.StoreClosed" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.StoreClosed" />
+                                <span asp-validation-for="StoreInformationSettings.StoreClosed"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default advanced-setting">
+                    <div class="panel-heading">
+                        Üst Menü
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.AvatarPictureSize" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.AvatarPictureSize" />
+                                <span asp-validation-for="StoreInformationSettings.AvatarPictureSize"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="panel panel-default advanced-setting">
+                    <div class="panel-heading">
+                        Alt Bilgi
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.ContactEmail" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.ContactEmail" />
+                                <span asp-validation-for="StoreInformationSettings.ContactEmail"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Sosyal Medya
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.FacebookLink" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.FacebookLink" />
+                                <span asp-validation-for="StoreInformationSettings.FacebookLink"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.TwitterLink" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.TwitterLink" />
+                                <span asp-validation-for="StoreInformationSettings.TwitterLink"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.YoutubeLink" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.YoutubeLink" />
+                                <span asp-validation-for="StoreInformationSettings.YoutubeLink"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.GooglePlusLink" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.GooglePlusLink" />
+                                <span asp-validation-for="StoreInformationSettings.GooglePlusLink"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.InstagramLink" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.InstagramLink" />
+                                <span asp-validation-for="StoreInformationSettings.InstagramLink"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default advanced-setting">
+                    <div class="panel-heading">
+                        Blog  Ayarları
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.UseRichEditorInMessageTemplates" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.UseRichEditorInMessageTemplates" />
+                                <span asp-validation-for="StoreInformationSettings.UseRichEditorInMessageTemplates"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.DefaultGridPageSize" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.DefaultGridPageSize" />
+                                <span asp-validation-for="StoreInformationSettings.DefaultGridPageSize"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.GridPageSizes" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.GridPageSizes" />
+                                <span asp-validation-for="StoreInformationSettings.GridPageSizes"></span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.RichEditorAdditionalSettings" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.RichEditorAdditionalSettings" />
+                                <span asp-validation-for="StoreInformationSettings.RichEditorAdditionalSettings"></span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.RichEditorAllowJavaScript" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.RichEditorAllowJavaScript" />
+                                <span asp-validation-for="StoreInformationSettings.RichEditorAllowJavaScript"></span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.UseIsoDateFormatInJsonResult" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.UseIsoDateFormatInJsonResult" />
+                                <span asp-validation-for="StoreInformationSettings.UseIsoDateFormatInJsonResult"></span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.UseIsoDateFormatInJsonResult" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.UseIsoDateFormatInJsonResult" />
+                                <span asp-validation-for="StoreInformationSettings.UseIsoDateFormatInJsonResult"></span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.UseNestedSetting" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.UseNestedSetting" />
+                                <span asp-validation-for="StoreInformationSettings.UseNestedSetting"></span>
+                            </div>
+                        </div>   <div class="form-group" style="display: none">
+                            <div class="col-md-3">
+                                <ags-label asp-for="StoreInformationSettings.MultipleThumbDirectories" />
+                            </div>
+                            <div class="col-md-9">
+                                <ags-editor asp-for="StoreInformationSettings.MultipleThumbDirectories" />
+                                <span asp-validation-for="StoreInformationSettings.MultipleThumbDirectories"></span>
+                            </div>
+                        </div>
+                    </div>   <div class="form-group" >
+                        <div class="col-md-3">
+                            <ags-label asp-for="StoreInformationSettings.CopyRigth" />
+                        </div>
+                        <div class="col-md-9">
+                            <ags-editor asp-for="StoreInformationSettings.CopyRigth" />
+                            <span asp-validation-for="StoreInformationSettings.CopyRigth"></span>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

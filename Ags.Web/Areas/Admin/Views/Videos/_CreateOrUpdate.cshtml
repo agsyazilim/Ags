@@ -1,0 +1,268 @@
+﻿@model VideoKategoriModel
+<div class="panel-group">
+@if (Model.Id > 0)
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="productpictures-grid"></div>
+            <script>
+                $(document).ready(function() {
+                    $("#productpictures-grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("GaleriPictureList", "Videos"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: function() {
+                                        var data = {
+                                            Id: '@(Model.Id)'
+                                        };
+                                        addAntiForgeryToken(data);
+                                        return data;
+                                    }
+                                },
+                                update: {
+                                    url: "@Html.Raw(Url.Action("GaleriPictureUpdate", "Videos"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken
+                                },
+                                destroy: {
+                                    url: "@Html.Raw(Url.Action("GaleriPictureDelete", "Videos"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken
+                                }
+                            },
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                errors: "Errors",
+                                model: {
+                                    id: "Id",
+                                    fields: {
+                                        Descriptions: { editable: false, type: "string" },
+                                        EmbedCode: { editable: true, type: "string" },
+                                        Published: { editable: true, type: "boolean" },
+                                        IsApproved: { editable: true, type: "boolean" },
+                                        DisplayOrder: { editable: true, type: "number" }
+                                    }
+                                }
+                            },
+                            requestEnd: function(e) {
+                                if (e.type == "update") {
+                                    this.read();
+                                }
+                            },
+                            error: function(e) {
+                                display_kendoui_grid_error(e);
+                                // Cancel the changes
+                                this.cancelChanges();
+                            },
+                            pageSize: @(Model.VideoSearchModel.PageSize),
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        },
+                        pageable: {
+                            refresh: true,
+                            pageSizes: [@(Model.VideoSearchModel.AvailablePageSizes)],
+                            @await Html.PartialAsync("_GridPagerMessages")
+                        },
+                        editable: {
+                            confirmation: "Silmek istediğinizden Emin misiniz?",
+                            mode: "inline"
+                        },
+                        scrollable: false,
+                        columns: [
+                            {
+                                field: "Descriptions",
+                                title: "Açıklama",
+                                width: 200
+                            },
+                            {
+                                field: "EmbedCode",
+                                title: "Video Kodu",
+                                width: 200
+                            },
+                            {
+                                field: "Published",
+                                title: "Yayında",
+                                width: 150,
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template:
+                                    '# if(Published) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                            },
+                            {
+                                field: "IsApproved",
+                                title: "Onaylı",
+                                width: 150,
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template:
+                                    '# if(IsApproved) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                            },
+                            {
+                                field: "DisplayOrder",
+                                title: "Sırası",
+                                //integer format
+                                format: "{0:0}",
+                                width: 150
+                            },
+                            {
+                            command: [{
+                                        name: "edit",
+                                        text: {
+                                            edit: "Düzenle",
+                                            update: "Güncelle",
+                                            cancel: "Vazgeç"
+                                        }
+                            }, {
+                                name: "destroy",
+                                text: "Sil"
+                            }
+                        ],
+                          width:200
+                       }
+                ]
+                });
+                });
+            </script>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Ekle
+        </div>
+        <div class="panel-body">
+            <script>
+                $(document).ready(function() {
+                    $('#addProductPicture').click(function() {
+                        var videoId = $("#@Html.IdFor(model => model.AddVideoModel.VideoGalleryId)").val();
+                        var pictureId = $("#@Html.IdFor(model => model.AddVideoModel.PictureId)").val();
+                        var pictureUrl = $("#@Html.IdFor(model => model.AddVideoModel.PictureUrl)").val();
+                        var description = $("#@Html.IdFor(model => model.AddVideoModel.Descriptions)").val();
+                        var embedcode = $("#@Html.IdFor(model => model.AddVideoModel.EmbedCode)").val();
+                        var published = $("#@Html.IdFor(model => model.AddVideoModel.Published)").val();
+                        var isaproved = $("#@Html.IdFor(model => model.AddVideoModel.IsApproved)").val();
+                        var displayOrder = $("#@Html.IdFor(model => model.AddVideoModel.DisplayOrder)").val();
+
+
+                        $('#addProductPicture').attr('disabled', true);
+
+                        var postData = {
+                            videoId: videoId,
+                            pictureId: pictureId,
+                            pictureUrl:pictureUrl,
+                            displayOrder: displayOrder,
+                            description: description,
+                            embedcode: embedcode,
+                            published: published,
+                            isaproved:isaproved,
+                            galeriId: '@Model.Id'
+                        };
+                        addAntiForgeryToken(postData);
+
+                        $.ajax({
+                            cache: false,
+                            type: "POST",
+                            url: "@Url.Action("GaleriPictureAdd", "Videos")",
+                            data: postData,
+                            success: function (data) {
+                                $('#addProductPicture').attr('disabled', false);
+                                if (!data.Result)
+                                    return;
+                                var grid = $("#productpictures-grid");
+                                grid.data('kendoGrid').dataSource.read();
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                alert('Failed to add product picture.');
+                                $('#addProductPicture').attr('disabled', false);
+                            }
+                        });
+                    });
+                });
+            </script>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddVideoModel.PictureId" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="AddVideoModel.PictureId" />
+                    <span asp-validation-for="AddVideoModel.PictureId"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddVideoModel.PictureUrl" />
+                </div>
+                <div class="col-md-9">
+                    <ags-textarea asp-for="AddVideoModel.PictureUrl" />
+                    <span asp-validation-for="AddVideoModel.PictureUrl"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddVideoModel.Descriptions" />
+                </div>
+                <div class="col-md-9">
+                    <ags-textarea asp-for="AddVideoModel.Descriptions" />
+                    <span asp-validation-for="AddVideoModel.Descriptions"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddVideoModel.EmbedCode" />
+                </div>
+                <div class="col-md-9">
+                    <ags-textarea asp-for="AddVideoModel.EmbedCode" />
+                    <span asp-validation-for="AddVideoModel.EmbedCode"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddVideoModel.IsApproved" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="AddVideoModel.IsApproved" />
+                    <span asp-validation-for="AddVideoModel.IsApproved"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddVideoModel.Published" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="AddVideoModel.Published" />
+                    <span asp-validation-for="AddVideoModel.Published"></span>
+                </div>
+            </div>
+           <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddVideoModel.DisplayOrder" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="AddVideoModel.DisplayOrder" />
+                    <span asp-validation-for="AddVideoModel.DisplayOrder"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-9 col-md-offset-3">
+                    <button type="button" id="addProductPicture" class="btn btn-primary">Ekle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+           </div>
+    </div>
+}
+</div>

@@ -1,0 +1,44 @@
+﻿@model AdvertisementModel
+<div class="right">
+    <div class="banner_code">
+        <div class="eko_flags">
+            @if (!string.IsNullOrEmpty(Model.CodeFlash))
+            {
+                @Html.Raw(Model.CodeFlash)
+            }
+            @if (!string.IsNullOrEmpty(Model.FlashCode))
+            {
+                @Html.Raw(Model.FlashCode)
+            }
+            @if (!string.IsNullOrEmpty(Model.PictureUrl))
+            {
+                if (!string.IsNullOrEmpty(Model.UrlAddress))
+                {
+                    <a href="@Model.UrlAddress">
+                        <img src="@Model.PictureUrl" width="160px" class="img-responsive">
+                    </a>
+                }
+                else
+                {
+                    <img src="@Model.PictureUrl" width="160px" class="img-responsive">
+                }
+
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript" on-content-loaded="true">
+
+    $(window).scroll(function() {
+        var $height = $(window).scrollTop();
+        var footer = document.getElementsByClassName("instagram-section");
+        var p = $(footer);
+        var offset = p.offset();
+        if($height > (offset.top-600)) {
+            $('#reklam-sag').addClass('reklamKapat');
+        } else {
+            $('#reklam-sag').removeClass('reklamKapat');
+        }
+    });
+
+</script>

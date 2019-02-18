@@ -1,0 +1,139 @@
+﻿@using Ags.Data.Domain
+@using Ags.Services.Customers
+@using Ags.Services.Seo
+@using Microsoft.AspNetCore.Identity
+@model BlogPostModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject ICustomerService CustomerService
+@inject IUrlRecordService UrlRecordService
+@{
+    ViewBag.Title = Model.MetaTitle ?? Model.Title;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.MetaKeywords = Model.MetaKeywords;
+    Layout = "_BlogColumn";
+}
+@section banner{
+    <div class="page-banner-section section mt-30 mb-30" data-title="BlogPost">
+        <div class="container">
+            <div class="row row-1">
+                <div class="col-12">
+                    <div class="page-banner" style="background-image: url(/images/uploaded/categori/gundem.jpg)">
+                        <h2>@Model.Title</h2>
+                        <ol class="page-breadcrumb">
+                            <li><a href="#">Anasayfa</a></li>
+                            <li class="active">@Model.SeName</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="single-blog mb-50" data-title="BlogPost">
+    <div class="blog-wrap">
+        <div class="meta fix">
+            <a href="#" class="meta-item category">@Model.Title</a>
+            <a href="#" class="meta-item author">
+                <img src="@Model.EditorModel.AvatarUrl" alt="post author">
+                @Model.EditorModel.FirstName @Model.EditorModel.LastName
+            </a>
+            <span class="meta-item date"><i class="fa fa-clock-o"></i>@Model.CreatedOn.ToString("d")</span>
+            <a href="#" class="meta-item comments"><i class="fa fa-comments"></i>@Model.NumberOfComments</a>
+            <span class="meta-item view"><i class="fa fa-eye"></i>@Model.NumberOfRead</span>
+        </div>
+        <h3 class="title">@Model.Title</h3>
+        <div class="content">@Html.Raw(Model.Body)</div>
+        <div class="tags-social float-left">
+            @if (Model.Tags.Count > 0)
+            {
+                <div class="tags float-left">
+                    <i class="fa fa-tags"></i>
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <a href="#">@tag,</a>
+                    }
+                </div>
+            }
+            <div class="blog-social float-right">
+                <div class="addthis_inline_share_toolbox"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="post-author fix mb-50" data-title="BlogPost">
+
+    <div class="image float-left"><img src="@Model.EditorModel.AvatarUrl" alt="post-author"></div>
+
+    <div class="content fix">
+        <h5><a href="#">@Model.EditorModel.FirstName @Model.EditorModel.LastName</a></h5>
+        <p></p>
+        <div class="social">
+            <a href="@Model.EditorModel.FaceBookLink" target="_blank"><i class="fa fa-facebook"></i></a>
+            <a href="@Model.EditorModel.TwitterLink" target="_blank"><i class="fa fa-twitter"></i></a>
+            <a href="@Model.EditorModel.InstagramLink" target="_blank"><i class="fa fa-instagram"></i></a>
+            <a href="mailto:@Model.EditorModel.Email"><i class="fa fa-envelope"></i></a>
+        </div>
+    </div>
+</div>
+@if (Model.Comments.Count > 0 & Model.AllowComments)
+{<div class="post-author fix mb-50">
+        @foreach (var item in Model.Comments)
+        {
+            <div class="image float-left">
+                <img src="/images/default-avatar.jpg" alt="post-author">
+            </div>
+            <div class="content fix">
+                <h5><a href="#">@item.CustomerName</a></h5>
+                <p>@item.CommentText</p>
+                <div class="social">
+                    <a href="#">@item.CreatedOn.ToShortDateString()</a>
+                </div>
+            </div>
+        }
+    </div>
+}
+<div class="post-block-wrapper">
+    <div class="head">
+        <h4 class="title">Yorum Ekleyin</h4>
+    </div>
+    <div class="body">
+        <div class="post-comment-form">
+            @if (Model.AllowComments)
+            {
+                <div class="notifications">
+                    <div asp-validation-summary="ModelOnly" class="message-error"></div>
+                    @{
+                        var result = TempData["ags.news.addcomment.result"] as string;
+                    }
+                    @if (!string.IsNullOrEmpty(result))
+                    {
+                        <div class="result">@result</div>
+                    }
+                </div>
+                <form asp-controller="Editor" asp-action="BlogCommentAdd" method="post" class="row">
+                    <div class="col-12 mb-20">
+                        <label asp-for="AddNewComment.CommentText" asp-postfix=":"></label>
+                        <textarea asp-for="AddNewComment.CommentText" class="enter-comment-text"></textarea>
+                        <span asp-validation-for="AddNewComment.CommentText"></span>
+                    </div>
+                    <div class="col-12">
+                        <input type="submit" value="Gönder">
+                    </div>
+                    <input type="hidden" value="@Model.Id" name="blogPostId" />
+                </form>
+            }
+        </div>
+    </div>
+</div>
+@section Right{
+    @await Component.InvokeAsync("BlogMonths").ConfigureAwait(false)
+    @await Component.InvokeAsync("BlogTags").ConfigureAwait(false)
+    @await Component.InvokeAsync("RightSocialMedia").ConfigureAwait(false)
+}
+@section PostSectionLeft{
+    @await Component.InvokeAsync("PostSectionLeft").ConfigureAwait(false)
+}
+@section PostSectionRigth {
+    @await Component.InvokeAsync("PostSectionRigth").ConfigureAwait(false)
+}

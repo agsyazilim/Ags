@@ -1,0 +1,44 @@
+﻿@model Ags.Data.Domain.Common.Modules
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="content">
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="Name" />
+                    </div>
+                    <div class="col-md-9">
+                        <ags-editor asp-for="Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="SectionId" />
+                    </div>
+                    <div class="col-md-9">
+                        <ags-select asp-for="SectionId" asp-items="@ViewBag.SectionId"/>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="Published" />
+                    </div>
+                    <div class="col-md-9">
+                        <ags-editor asp-for="Published" />
+                        <span asp-validation-for="Published" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

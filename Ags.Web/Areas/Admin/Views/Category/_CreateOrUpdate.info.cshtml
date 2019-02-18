@@ -1,0 +1,164 @@
+﻿
+@model CategoryModel
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="Name" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="Name" asp-required="true" />
+                    <span asp-validation-for="Name"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="Description" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="Description" asp-template="RichEditor" />
+                    <span asp-validation-for="Description"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <ags-label asp-for="BannerPictureId" />
+
+            </div>
+            <div class="col-md-9">
+                <ags-editor asp-for="BannerPictureId" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <ags-label asp-for="BannerLitlePictureId" />
+
+            </div>
+            <div class="col-md-9">
+                <ags-editor asp-for="BannerLitlePictureId" />
+
+            </div>
+        </div>
+        <div class="form-group" @(Model.AvailableCategoryTemplates.SelectionIsNotPossible() ? Html.Raw("style=\"display:none\"") : null)>
+            <div class="col-md-3">
+                <ags-label asp-for="CategoryTemplateId" />
+            </div>
+            <div class="col-md-9">
+                <ags-select asp-for="CategoryTemplateId" asp-items="Model.AvailableCategoryTemplates" />
+                <span asp-validation-for="CategoryTemplateId"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-3">
+                <ags-label asp-for="ParentCategoryId" />
+            </div>
+            <div class="col-md-9">
+                <ags-select asp-for="ParentCategoryId" asp-items="Model.AvailableCategories" />
+                <span asp-validation-for="ParentCategoryId"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <ags-label asp-for="PhotoGalleryId" />
+            </div>
+            <div class="col-md-9">
+                <ags-select asp-for="PhotoGalleryId" asp-items="Model.AvailablePhotoGallery" />
+                <span asp-validation-for="PhotoGalleryId"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <ags-label asp-for="SliderId" />
+            </div>
+            <div class="col-md-9">
+                <ags-select asp-for="SliderId" asp-items="Model.AvailableSliders" />
+                <span asp-validation-for="SliderId"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <ags-label asp-for="VideoGalleryId" />
+            </div>
+            <div class="col-md-9">
+                <ags-select asp-for="VideoGalleryId" asp-items="Model.AvailableVideoGalleries" />
+                <span asp-validation-for="VideoGalleryId"></span>
+            </div>
+        </div>
+        <div class="form-group advanced-setting">
+            <div class="col-md-3">
+                <ags-label asp-for="ShowOnHomePage" />
+            </div>
+            <div class="col-md-9">
+                <ags-editor asp-for="ShowOnHomePage" />
+                <span asp-validation-for="ShowOnHomePage"></span>
+            </div>
+        </div>
+        <div class="form-group advanced-setting">
+            <div class="col-md-3">
+                <ags-label asp-for="IncludeInTopMenu" />
+            </div>
+            <div class="col-md-9">
+                <ags-editor asp-for="IncludeInTopMenu" />
+                <span asp-validation-for="IncludeInTopMenu"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <ags-label asp-for="IncludeInFooterMenu" />
+            </div>
+            <div class="col-md-9">
+                <ags-editor asp-for="IncludeInFooterMenu" />
+                <span asp-validation-for="IncludeInFooterMenu"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <ags-label asp-for="IncludeInManset" />
+            </div>
+            <div class="col-md-9">
+                <ags-editor asp-for="IncludeInManset" />
+                <span asp-validation-for="IncludeInManset"></span>
+            </div>
+        </div>
+        <div id="pnlPageSize" class="form-group ">
+            <div class="col-md-3">
+                <ags-label asp-for="PageSize" />
+            </div>
+            <div class="col-md-9">
+                <ags-editor asp-for="PageSize" />
+                <span asp-validation-for="PageSize"></span>
+            </div>
+        </div>
+        <div id="pnlPageSizeOptions" class="form-group" style="display: none">
+            <div class="col-md-3">
+                <ags-label asp-for="PageSizeOptions" />
+            </div>
+            <div class="col-md-9">
+                <ags-editor asp-for="PageSizeOptions" />
+                <span asp-validation-for="PageSizeOptions"></span>
+            </div>
+        </div>
+        <div class="form-group advanced-setting">
+            <div class="col-md-3">
+                <ags-label asp-for="Published" />
+            </div>
+            <div class="col-md-9">
+                <ags-editor asp-for="Published" />
+                <span asp-validation-for="Published"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <ags-label asp-for="DisplayOrder" />
+            </div>
+            <div class="col-md-9">
+                <ags-editor asp-for="DisplayOrder" />
+                <span asp-validation-for="DisplayOrder"></span>
+            </div>
+        </div>
+    </div>
+</div>

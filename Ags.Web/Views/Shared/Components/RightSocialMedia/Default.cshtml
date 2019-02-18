@@ -1,0 +1,87 @@
+﻿@inject StoreInformationSettings StoreInformationSettings
+@using Ags.Data.Domain
+@model AdvertisementModel
+<div class="row" data-title="RightSocialMedia">
+    <div class="single-sidebar col-lg-12 col-md-6 col-12">
+        <div class="sidebar-block-wrapper">
+            <div class="head feature-head">
+                <h4 class="title">SOSYAL MEDYA</h4>
+            </div>
+            <div class="body">
+                <div class="sidebar-social-follow">
+                    <div>
+                        <a href="@StoreInformationSettings.FacebookLink" class="facebook" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                            <h3 id="new-count">500</h3>
+                            <span>Takipçi</span>
+                        </a>
+                        <script type="text/javascript" on-content-loaded="true">
+                                                                    //var access ="EAAEFndyRjKUBAFcfr790EEBsxClWMW4pltIGBdMk85pGHNzRO9iATJsYJMfgbYKdU0f5Ng14AYweoxI4lXmcViQ1OR8yrqNPocy0LJZCURZAzY9JDqiApLqwFzF0qiE5LYIVcPQpO2HpaWAa6xajTZC2Bbehtc16kCRBQ3AYFLYHqFTfJsUdqIoF4XXCGIkjT117kbveQZDZD";
+                                                                    //FB.api('/me','GET',
+                                                                    //    { access_token: access, "fields": "id,name,likes{fan_count,new_like_count}" },
+                                                                    //    function(response) {
+                                                                    //        // Insert your code here
+                                                                    //        if (response.likes.data[0].fan_count) {
+                                                                    //            $(document.getElementById("new-count")).empty();
+                                                                    //            $(document.getElementById("new-count")).append(
+                                                                    //                response.likes.data[0].new_like_count);
+                                                                    //        }
+
+
+                                                                    //    }
+                                                                    //);
+                        </script>
+                    </div>
+                    <div>
+                        <a href="@StoreInformationSettings.InstagramLink" class="dribbble" target="_blank">
+                            <i class="fa fa-instagram"></i>
+                            <h3>4,743</h3>
+                            <span>Followers</span>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="sidebar-social-follow">
+
+                    @await Component.InvokeAsync("TopicBlock", new { systemName = "nobetci" }).ConfigureAwait(false)
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="single-sidebar col-lg-12 col-md-6 col-12">
+
+        @if (!string.IsNullOrEmpty(Model.CodeFlash))
+        {
+            @Html.Raw(Model.CodeFlash)
+        }
+        @if (!string.IsNullOrEmpty(Model.FlashCode))
+        {
+            @Html.Raw(Model.CodeFlash)
+        }
+        @if (!string.IsNullOrEmpty(Model.PictureUrl))
+        {
+            if (!string.IsNullOrEmpty(Model.UrlAddress))
+            {
+                <a href="@Model.UrlAddress" class="sidebar-banner">
+                    <img src="@Model.PictureUrl" title="banner"
+                </a>
+            }
+            else
+            {
+
+                <a href="#" class="sidebar-banner">
+                    <img src="@Model.PictureUrl" title="banner">
+                </a>
+            }
+
+        }
+
+
+    </div>
+    @await Component.InvokeAsync("Hava").ConfigureAwait(false)
+    @await Component.InvokeAsync("Namaz").ConfigureAwait(false)
+    @await Component.InvokeAsync("PollBlock", new { systemKeyword = "secim anketi" }).ConfigureAwait(false)
+</div>
+

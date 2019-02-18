@@ -1,0 +1,29 @@
+﻿@model TemplatesModel
+
+
+@{
+    //page title
+    ViewBag.Title = "Templates";
+    //active menu item (system name)
+    Html.SetActiveMenuItemSystemName("Templates");
+}
+
+<ags-antiforgery-token />
+
+<form asp-controller="Template" asp-action="List" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+           Şablonlar
+        </h1>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <ags-tabs id="templates-tabs">
+                <ags-tab asp-name="tab-templates-category" asp-title="Kategori" asp-default="true">@await Html.PartialAsync("_List.Category", Model.TemplatesCategory)</ags-tab>
+                <ags-tab asp-name="tab-templates-topic" asp-title="Sayfa">@await Html.PartialAsync("_List.Topic", Model.TemplatesTopic)</ags-tab>
+            </ags-tabs>
+        </div>
+    </div>
+
+</form>

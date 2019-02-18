@@ -1,0 +1,18 @@
+﻿@inject StoreInformationSettings StoreInformationSettings
+@using Ags.Data.Domain
+@using Ags.Services.Common
+@inject ISectionService SectionService
+@if (!string.IsNullOrEmpty(SectionService.GetDescription("HomePageVideo")))
+{
+    <div class="col-lg-8 col-12 mb-50" data-title="HomePageVideo">
+        <div class="RYPP r16-9" data-playlist="@SectionService.GetDescription("HomePageVideo")">
+            <div class="RYPP-video">
+                <div class="RYPP-video-player"></div>
+            </div>
+            <div class="RYPP-playlist">
+                <div class="RYPP-items customScroll"></div>
+            </div>
+        </div>
+    </div>
+}
+

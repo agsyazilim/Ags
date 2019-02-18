@@ -1,0 +1,136 @@
+﻿@model PollSearchModel
+
+@{
+    //page title
+    ViewBag.Title = "Polls";
+    //active menu item (system name)
+    Html.SetActiveMenuItemSystemName("Polls");
+}
+
+<ags-antiforgery-token />
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Anket
+    </h1>
+    <div class="pull-right">
+        <a asp-action="Create" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            Yeni Ekle
+        </a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="polls-grid"></div>
+
+                    <script>
+                        $(document).ready(function() {
+                            $("#polls-grid").kendoGrid({
+                                dataSource: {
+                                    type: "json",
+                                    transport: {
+                                        read: {
+                                            url: "@Html.Raw(Url.Action("List", "Poll"))",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: function() {
+                                                var data = {
+                                                    SearchStoreId: $('#SearchStoreId').val()
+                                                };
+                                                addAntiForgeryToken(data);
+                                                return data;
+                                            }
+                                        }
+                                    },
+                                    schema: {
+                                        data: "Data",
+                                        total: "Total",
+                                        errors: "Errors"
+                                    },
+                                    error: function(e) {
+                                        display_kendoui_grid_error(e);
+                                        // Cancel the changes
+                                        this.cancelChanges();
+                                    },
+                                    pageSize: @(Model.PageSize),
+                                    serverPaging: true,
+                                    serverFiltering: true,
+                                    serverSorting: true
+                                },
+                                pageable: {
+                                    refresh: true,
+                                    pageSizes: [@(Model.AvailablePageSizes)],
+                                    @await Html.PartialAsync("_GridPagerMessages")
+                                },
+                                editable: {
+                                    confirmation: "DeleteConfirmation",
+                                    mode: "inline"
+                                },
+                                scrollable: false,
+                                columns: [
+                                {
+                                    field: "Name",
+                                    title: "Adı"
+                                    },
+                                    {
+                                    field: "DisplayOrder",
+                                    title: "Sırası",
+                                    width: 200,
+                                }, {
+                                    field: "Published",
+                                    title: "Yayında",
+                                    width: 100,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(Published) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                }, {
+                                    field: "ShowOnHomePage",
+                                    title: "Anasayfada Göster",
+                                    width: 150,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(ShowOnHomePage) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                }, {
+                                    field: "StartDate",
+                                    title: "Başlangış Tarihi",
+                                    width: 200,
+                                    type: "date",
+                                    format: "{0:G}"
+                                }, {
+                                    field: "EndDate",
+                                    title: "Yayından Kaldırma",
+                                    width: 200,
+                                    type: "date",
+                                    format: "{0:G}"
+                                }, {
+                                    field: "Id",
+                                    title: "Düzenle",
+                                    width: 100,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>Düzenle</a>'
+                                    }
+                                ]
+                            });
+                        });
+                    </script>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('#search-poll').click(function() {
+                                var grid = $('#polls-grid').data('kendoGrid');
+                                grid.dataSource.page(1);
+                                return false;
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

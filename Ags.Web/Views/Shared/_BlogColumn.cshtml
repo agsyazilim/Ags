@@ -1,0 +1,59 @@
+﻿@using Ags.Services.Common
+@inject ISectionService SectionService
+@{
+    Layout = "_Layout";
+
+}
+
+@if (IsSectionDefined("banner"))
+{
+    @RenderSection("banner")
+}
+@if (IsSectionDefined("Slider"))
+{
+    @RenderSection("Slider")
+}
+
+@await Component.InvokeAsync("PopulerSectionCategory").ConfigureAwait(false)
+<div class="blog-section section mt-50" data-title="_blogColumn">
+    <div class="container">
+        <div class="row" data-title="_blogColumn">
+            <div class="col-lg-8 col-12 mb-50">
+                @if (IsSectionDefined("PostSectionLeft"))
+                {
+                    <div id="reklam-sol" class="ads160x600l">
+                        @RenderSection("PostSectionLeft")
+                    </div>
+
+                }
+
+                @if (IsSectionDefined("PostSectionRigth"))
+                {
+                    <div id="reklam-sag" class="ads160x600r">
+                        @RenderSection("PostSectionRigth")
+                    </div>
+
+                }
+                @RenderBody()
+            </div>
+            <div class="col-lg-4 col-12 mb-50">
+                <div class="row">
+                    @if (IsSectionDefined("Right"))
+                    {
+                        @RenderSection("Right")
+                    }
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@section scripts
+    {
+    @await RenderSectionAsync("scripts", required: false).ConfigureAwait(false)
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5241c4767b9ce193"></script>
+
+}

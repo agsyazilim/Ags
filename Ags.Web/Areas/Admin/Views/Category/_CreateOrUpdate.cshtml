@@ -1,0 +1,13 @@
+﻿@model CategoryModel
+<div asp-validation-summary="All"></div>
+<input asp-for="Id" type="hidden"/>
+
+<div class="content">
+    <div class="form-horizontal">
+        <ags-tabs id="category-edit">
+            <ags-tab asp-name="tab-info" asp-title="Info" asp-default="true">@await Html.PartialAsync("_CreateOrUpdate.Info", Model)</ags-tab>
+            <ags-tab asp-name="tab-seo" asp-title="SEO" class="advanced-setting">@await Html.PartialAsync("_CreateOrUpdate.SEO", Model)</ags-tab>
+        </ags-tabs>
+    </div>
+</div>
+

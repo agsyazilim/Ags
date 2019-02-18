@@ -1,0 +1,101 @@
+﻿@model IList<SidebarMenu>
+@inject IPictureService pictureService
+
+
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="@pictureService.GetPictureUrl(Convert.ToInt32(User.GetUserProperty(CustomClaimTypes.PictureId)),120)" class="img-circle" alt="ui">
+            </div>
+            <div class="pull-left info">
+                <p>@User.GetUserProperty(CustomClaimTypes.Name) @User.GetUserProperty(CustomClaimTypes.Surname)</p>
+                <!-- Status -->
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+        <!-- search form (Optional) -->
+        <div class="sidebar-form">
+            <div id="search-box">
+                <input type="text" class="form-control admin-search-box typeahead" placeholder="Menü Ara">
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                Admin.Search.init();
+            });
+        </script>
+        <ul class="sidebar-menu" data-widget="tree">
+            @foreach (var menu in Model)
+            {
+
+                if (menu.Type == SidebarMenuType.Header)
+                {
+                    <li class="header">
+                        <span>@menu.Name</span>
+                    </li>
+                }
+                else if (menu.Type == SidebarMenuType.Link)
+                {
+                    var active = string.Empty;
+                    if (menu.URLPath != "/" && @Context.Request.Path.Value.Contains(menu.URLPath))
+                    {
+                        active = "active current-active-item";
+
+
+                    }
+                    <li class="@active">
+                        <a href="@menu.URLPath" class="menu-item-link">
+                            <i class="@menu.IconClassName"></i>
+                            <span class="menu-item-title">@menu.Name</span>
+                        </a>
+                    </li>
+
+                }
+                else if (menu.Type == SidebarMenuType.Tree&&menu.Permissions)
+                {
+                    var active = string.Empty;
+                    if (menu.TreeChild.Any(x => @Context.Request.Path.Value.Contains(x.URLPath)))
+                    {
+                        active = "active current-active-item menu-open";
+
+
+                    }
+
+                    <li class="treeview @active">
+                        <a href="#">
+                            <i class="@menu.IconClassName"></i> <span>@menu.Name</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            @foreach (SidebarMenu subMenu in menu.TreeChild)
+                            {
+                                active = string.Empty;
+                                if (Context.Request.Path.Value.Contains(subMenu.URLPath))
+                                {
+                                    active = "active current-active-item";
+
+
+
+                                }
+                                <li class="@active">
+                                    <a href="@subMenu.URLPath" class="menu-item-link">
+                                        <i class="@subMenu.IconClassName"></i>
+                                        <span class="menu-item-title">@subMenu.Name</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            }
+        </ul>
+
+        <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+</aside>

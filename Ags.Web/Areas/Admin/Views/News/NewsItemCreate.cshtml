@@ -1,0 +1,31 @@
+﻿@model NewsItemModel
+
+@{
+    //page title
+    ViewBag.Title = "AddNew";
+    //active menu item (system name)
+   
+}
+
+<form asp-controller="News" asp-action="NewsItemCreate" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Yeni Ekle
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a asp-action="List" asp-controller="News">Geri Dön</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+               Kaydet
+            </button>
+            <button type="submit" name="save-continue" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+               Kaydet ve Düzenle
+            </button>
+        </div>
+    </div>
+    @await Html.PartialAsync("_CreateOrUpdate", Model)
+</form>

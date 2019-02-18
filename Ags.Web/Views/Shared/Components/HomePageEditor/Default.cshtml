@@ -1,0 +1,49 @@
+﻿@using Ags.Web.Infrastructure
+@model CustomerListModel
+<div class="col-lg-4 col-md-12 mb-50" data-title="HomePageEditor">
+    <div class="row">
+        <div class="col-12">
+            <div class="post-block-wrapper">
+                <div class="head education-head">
+                    <h4 class="title">YAZARLARIMIZ</h4>
+                </div>
+                <div class="body">
+                    <div class="four-row-post-carousel row-post-carousel post-block-carousel education-post-carousel">
+                        @if (Model.CustomerBlogList.Count > 0)
+                        {
+                            foreach (var item in Model.CustomerBlogList)
+                            {
+                                var blogItem = item;
+                                if (blogItem != null)
+                                {
+                                    <div class="post post-small post-list education-post">
+                                        <div class="post-wrap">
+                                            <a class="image" href="@Url.Action("BlogPost","Editor",new{ blogPostId=blogItem.BlogPostModel.Id})">
+                                                <img src="@blogItem.AvatarUrl" alt="post">
+                                            </a>
+                                            <div class="content">
+                                                <h5 class="title">
+                                                    <a href="@Url.Action("BlogPost","Editor",new{ blogPostId=blogItem.BlogPostModel.Id})">
+                                                        @blogItem.BlogPostModel.BodyOverview.Chop("40")
+                                                    </a>
+                                                </h5>
+                                                <div class="meta fix">
+                                                    <span class="meta-item date"><i class="fa fa-clock-o"></i>@blogItem.BlogPostModel.CreatedOn.ToString("d")</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+
+                        }
+                        <div align="center">
+                            <h5><a class="" href="@Url.Action("EditorList","Editor")">Tüm Yazarlar</a></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><br><br>
+</div>

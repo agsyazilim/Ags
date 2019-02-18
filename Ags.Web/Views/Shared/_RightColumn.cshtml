@@ -1,0 +1,100 @@
+﻿@using Ags.Services.Common
+@inject ISectionService SectionService
+@{
+    Layout = "_Layout";
+}
+@if (IsSectionDefined("SliderUst")){
+    @RenderSection("SliderUst")
+}
+
+<div class="hero-section section mt-30 mb-30" data-title="_RigthColumn">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="row row-1">
+                    <div class="order-lg-2 col-lg-6 col-12">
+                        <div id="wait" style="display: none; width: 69px; height: 89px; border: 1px solid black; position: absolute; top: 50%; left: 50%; padding: 2px;">
+                            <img src='/images/ajax-loader.gif' width="64" height="64"/>
+                        </div>
+                        @if (IsSectionDefined("Slider"))
+                        {
+                            @RenderSection("Slider")
+                        }
+                    </div>
+
+                    <div class="order-lg-3 col-lg-3 col-12">
+                        <div id="wait1" style="display: none; width: 69px; height: 89px; border: 1px solid black; position: absolute; top: 50%; left: 50%; padding: 2px;">
+                            <img src='/images/ajax-loader.gif' width="64" height="64"/>
+                        </div>
+                        @if (IsSectionDefined("Slider1"))
+                        {
+                            @RenderSection("Slider1")
+                        }
+                    </div>
+                    <div class="order-lg-3 col-lg-3 col-12">
+                        <div id="wait2" style="display: none; width: 69px; height: 89px; border: 1px solid black; position: absolute; top: 50%; left: 50%; padding: 2px;">
+                            <img src='/images/ajax-loader.gif' width="64" height="64"/>
+                        </div>
+                        @if (IsSectionDefined("Slider2"))
+                        {
+                            @RenderSection("Slider2")
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (IsSectionDefined("SliderAlt")){
+    @RenderSection("SliderAlt")
+}
+<div class="popular-section section pt-50 pb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="popular-post-slider" id="example" data-title="populersection"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (IsSectionDefined("PopulerSection"))
+{
+    @RenderSection("PopulerSection")
+}
+<div class="post-section section mt-50">
+    <div class="container">
+        @if (IsSectionDefined("PostSectionLeft"))
+        {
+            <div id="reklam-sol" class="ads160x600l">
+                @RenderSection("PostSectionLeft")
+            </div>
+
+        }
+
+        @if (IsSectionDefined("PostSectionRigth"))
+        {
+            <div id="reklam-sag" class="ads160x600r">
+                @RenderSection("PostSectionRigth")
+            </div>
+
+        }
+
+
+        @RenderBody()
+        <div data-title="company-rigthClolumn">
+            @await Component.InvokeAsync("Company")
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+@section scripts
+{
+    @await RenderSectionAsync("scripts", required: false).ConfigureAwait(false)
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5241c4767b9ce193"></script>
+
+
+
+}

@@ -1,0 +1,15 @@
+﻿@model PollModel
+
+
+<div asp-validation-summary="All"></div>
+<input asp-for="Id" type="hidden" />
+
+<div class="content">
+    <div class="form-horizontal">
+        <ags-tabs id="poll-edit">
+            <ags-tab asp-name="tab-info" asp-title="Anket" asp-default="true">@await Html.PartialAsync("_CreateOrUpdate.Info", Model)</ags-tab>
+            <ags-tab asp-name="tab-answers" asp-title="Cevaplar">@await Html.PartialAsync("_CreateOrUpdate.Answers", Model)</ags-tab>
+        </ags-tabs>
+    </div>
+</div>
+

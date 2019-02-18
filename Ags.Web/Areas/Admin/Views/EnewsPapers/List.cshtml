@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model ENewsContentModel
+
+@{
+    ViewData["Title"] = "E-Gazete";
+}
+
+ @Html.AntiForgeryToken()
+
+<form asp-controller="News" asp-action="List" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+           Yeni Ekle
+        </h1>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            <ags-tabs id="news-tabs">
+                <ags-tab asp-name="news-items" asp-title="E-Gazete Kategorisi" asp-default="true">@await Html.PartialAsync("_List.Categories", Model.ENewsCategoriesSearchModel)</ags-tab>
+                <ags-tab asp-name="news-comments" asp-title="E-Gazete">@await Html.PartialAsync("_List.ENewsItems", Model.ENewsItemSearchModel)</ags-tab>
+            </ags-tabs>
+        </div>
+    </div>
+
+
+</form>

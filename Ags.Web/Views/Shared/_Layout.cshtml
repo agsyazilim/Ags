@@ -1,0 +1,99 @@
+﻿@using Ags.Data.Common
+@using Ags.Data.Domain
+@inject IStoreContext StoreContext
+@inject StoreInformationSettings StoreInformationSettings
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title | @StoreContext.CurrentStore.Name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="@ViewBag.MetaDescription" />
+    <meta name="keywords" content="@ViewBag.MetaKeywords" />
+    <meta name="generator" content="ags yazilim" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <environment names="Development">
+        <link rel="stylesheet" href="~/tema/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/tema/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="~/tema/css/plugins.css" />
+        <link rel="stylesheet" href="~/tema/css/rypp.css" />
+        <link rel="stylesheet" href="~/tema/style.css" />
+        <script src="~/tema/js/vendor/modernizr-2.8.3.min.js" asp-append-version="false"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/tema/css/bootstrap.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/tema/css/font-awesome.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/tema/css/plugins.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/tema/css/rypp.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/tema/style.css" asp-append-version="true" />
+        <script src="~/tema/js/vendor/modernizr-2.8.3.min.js" asp-append-version="true"></script>
+    </environment>
+    <script src="~/tema/js/vendor/jquery-1.12.0.min.js"></script>
+    <!-- Global Site Etiketi (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133926642-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-133926642-1');
+    </script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div id="main-wrapper">
+        @await Component.InvokeAsync("HeaderTop").ConfigureAwait(false)
+        <div class="header-section section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="header-logo col-md-4 d-none d-md-block">
+                        @await Component.InvokeAsync("Logo").ConfigureAwait(false)
+                    </div>
+                    <div class="header-banner col-md-8 col-12">
+                        <div class="banner">
+                            @await Component.InvokeAsync("HeaderBanner").ConfigureAwait(false)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-section section bg-blue ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="menu-section-wrap">
+                            @await Component.InvokeAsync("TopMenu").ConfigureAwait(false)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @await Component.InvokeAsync("BreakingNews").ConfigureAwait(false)
+        @RenderBody()
+        @await Component.InvokeAsync("Instagram").ConfigureAwait(false)
+        @await Component.InvokeAsync("FooterSite").ConfigureAwait(false)
+        @await Component.InvokeAsync("CopyRight").ConfigureAwait(false)
+    </div>
+    <environment names="Development">
+
+        <script src="~/tema/js/popper.min.js" asp-append-version="false"></script>
+        <script src="~/tema/js/bootstrap.min.js" asp-append-version="false"></script>
+        <script src="~/tema/js/plugins.js" asp-append-version="false"></script>
+        <script src="/tema/js/rypp.js" asp-append-version="false"></script>
+        <script src="/tema/js/ytp-playlist.js" asp-append-version="false"></script>
+        <script src="/tema/js/main.js" asp-append-version="false"></script>
+        <script src="/tema/js/custom.js" asp-append-version="false"></script>
+    </environment>
+    <environment names="Staging,Production">
+
+        <script src="~/tema/js/popper.min.js" asp-append-version="true"></script>
+        <script src="~/tema/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/tema/js/plugins.js" asp-append-version="true"></script>
+        <script src="/tema/js/rypp.js" asp-append-version="true"></script>
+        <script src="/tema/js/ytp-playlist.js" asp-append-version="true"></script>
+        <script src="/tema/js/main.js" asp-append-version="true"></script>
+        <script src="/tema/js/custom.js" asp-append-version="true"></script>
+    </environment>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

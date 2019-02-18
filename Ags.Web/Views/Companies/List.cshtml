@@ -1,0 +1,44 @@
+﻿@model CompanyCategoriModel
+@{
+    ViewData["Title"] = "Firma Listesi";
+    Layout = "_OneColumnClear";
+}
+<div class="post-block-wrapper" data-title="CompaniesList">
+    <div class="head">
+        <h4 class="title">Firma Listesi</h4>
+    </div>
+    <div class="body">
+        <div class="three-row-post-carousel row-post-carousel post-block-carousel">
+            @if (Model.CompanyDetailModels.Count > 0)
+            {
+                foreach (var item in Model.CompanyDetailModels)
+                {
+                    <div class="post post-default-list">
+                        <div class="post-wrap">
+                            <a class="image" href="@Url.Action("Details","Companies", new{id=item.Id})"><img src="@item.PictureUrl" alt="post"></a>
+                            <div class="content">
+                                <h4 class="title"><a href="@Url.Action("Details","Companies", new{id=item.Id})">@item.Name</a></h4>
+                                <div class="meta fix">
+                                    <a href="#" class="meta-item author"><i class="fa fa-user"></i>@item.CategoryName</a>
+                                    <span class="meta-item date"><i class="fa fa-clock-o"></i>@item.StartDate.ToShortDateString()</span>
+                                </div>
+                                <p>@item.Description</p>
+                                <a href="@Url.Action("Details","Companies", new{id=item.Id})" class="read-more">Detay Bilgilerine Bakın</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+    </div>
+</div>
+@section CompanyCategori{
+    @await Component.InvokeAsync("CompanyCategory").ConfigureAwait(false)
+}
+
+
+
+
+
+

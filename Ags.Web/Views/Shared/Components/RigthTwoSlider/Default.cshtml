@@ -1,0 +1,35 @@
+﻿
+
+<div class="row row-1" data-title="RightTwoSlider" id="right-two-slider">
+    </div>
+
+<script on-content-loaded="true">
+    $(document).ready(function() {
+        //getPopulerNews
+        var urlPaths = '/Common/GetRigthTwoSlider';
+        $("#wait2").css("display", "block");
+        var jqxhr = $.post(urlPaths, function (data) {
+
+            }).done(function(data) {
+            var models = data;
+            $.each(models,
+                function(i, model) {
+                    var item =
+                        `<div class="post post-overlay hero-post col-lg-12 col-md-6 col-12"><div class="post-wrap"><div class="image">
+                                <img src="${model.PictureUrl}" width="290" height="222" class="img-responsive" alt="post">
+                                </div><div class="content"><h4 class="title"><a href="/haberdetay/${model.Id}/${model
+                            .SeName}">${model.Title}</a>
+                               </h4></div></div></div>`;
+                    $('#right-two-slider').append(item);
+
+                });
+        }).fail(function() {}
+        ).always(function() {
+
+        });
+        jqxhr.complete(function() {
+            $("#wait2").css("display", "none");
+        });
+
+    });
+</script>

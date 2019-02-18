@@ -1,0 +1,29 @@
+﻿@inject StoreInformationSettings StoreInformationSettings
+@using Ags.Data.Domain
+@model AdvertisementModel
+<div class="row mb-50" data-title="HomePageBanner">
+    <div class="col-12">
+        @if (!string.IsNullOrEmpty(Model.CodeFlash))
+        {
+            @Html.Raw(Model.CodeFlash)
+        }
+        @if (!string.IsNullOrEmpty(Model.FlashCode))
+        {
+            @Html.Raw(Model.CodeFlash)
+        }
+        @if (!string.IsNullOrEmpty(Model.PictureUrl))
+        {
+            if (!string.IsNullOrEmpty(Model.UrlAddress))
+            {
+                <a href="@Model.UrlAddress">
+                    <img src="@Model.PictureUrl" title="banner">
+                </a>
+            }
+            else
+            {
+                <img src="@Model.PictureUrl" title="banner">
+            }
+
+        }
+    </div>
+</div>

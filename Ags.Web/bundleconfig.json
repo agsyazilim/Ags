@@ -1,0 +1,9 @@
+[
+
+  {
+    "outputFileName": "wwwroot/tema/style.min.css",
+    "inputFiles": [
+      "wwwroot/tema/style.css"
+    ]
+  }
+]

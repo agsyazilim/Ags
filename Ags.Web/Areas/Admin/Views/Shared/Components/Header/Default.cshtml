@@ -1,0 +1,64 @@
+﻿@using System.Text.Encodings.Web
+@using Ags.Web.Framework
+<header class="main-header">
+    <!-- Logo -->
+    <a href="/" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b></b></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b></b></span>
+    </a>
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- Messages: style can be found in dropdown.less-->
+                @*@await Component.InvokeAsync("MenuMessage")*@
+                <!-- /.messages-menu -->
+                <!-- Notifications Menu -->
+                @*@await Component.InvokeAsync("MenuNotification")*@
+                <!-- Tasks Menu -->
+                @*@await Component.InvokeAsync("MenuTask")*@
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown"><i class="fa fa-gears"></i></a>
+                    <ul class="maintenance-menu dropdown-menu bg-light-blue" role="menu">
+                        <li>
+                            <form asp-controller="Common" asp-action="ClearCache" asp-area="@AreaNames.Admin">
+                                <input name="returnurl" type="hidden" value="/Admin">
+                                <button type="submit" class="bg-light-blue">
+                                    <span>Cache Temizle</span>
+                                </button>
+                            </form>
+                        </li>
+                        <li>
+                            <form asp-controller="Common" asp-action="RestartApplication" asp-area="@AreaNames.Admin">
+                                <input name="returnurl" type="hidden" value="/Admin">
+                                <button id="restart-application" type="submit" class="bg-light-blue">
+                                    <span>Uygulamayı Yeniden Başlat</span>
+                                </button>
+                                <script>
+                                $(document).ready(function () {
+                                    $("#restart-application").click(function (e) {
+                                        showThrobber('@Html.Raw(JavaScriptEncoder.Default.Encode("Ugulama Yeniden Başlatılıyor"))');
+                                    });
+                                });
+                                </script>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                <!-- User Account Menu -->
+                @await Component.InvokeAsync("MenuUser")
+                <!-- Control Sidebar Toggle Button -->
+                <li>
+                    <a href="/" target="_blank"><i class="fa fa-internet-explorer"></i>Siteyi Gör</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

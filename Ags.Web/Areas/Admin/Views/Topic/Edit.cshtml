@@ -1,0 +1,40 @@
+﻿@model TopicModel
+
+@{
+    //page title
+    ViewBag.Title = "EditTopicDetails";
+    //active menu item (system name)
+    Html.SetActiveMenuItemSystemName("Topics");
+}
+
+<form asp-controller="Topic" asp-action="Edit" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+           Düzenleniyor - @Model.SystemName
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a asp-action="List">Geri Dön</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="button" onclick="javascript:OpenWindow('@Url.RouteUrl("Topic", new {SeName = Model.SeName})', 800, 600, true); return false;" class="btn bg-purple">
+                <i class="fa fa-eye"></i>
+                Göster
+            </button>
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Kaydet
+            </button>
+            <button type="submit" name="save-continue" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+               Kaydet Devam Et
+            </button>
+            <span id="topic-delete" class="btn bg-red">
+                <i class="fa fa-trash-o"></i>
+               Sil
+            </span>
+        </div>
+    </div>
+    @await Html.PartialAsync("_CreateOrUpdate", Model)
+</form>
+<ags-delete-confirmation asp-model-id="@Model.Id" asp-button-id="topic-delete" />

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<PhotoGalleryModel>
+@{
+    ViewData["Title"] = "PhotoDetail";
+    Layout = "_OneColumn";
+}
+
+
+<div class="post-block-wrapper">
+    <div class="body">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="post post-overlay life-style-post post-separator-border col-md-4 col-12">
+                    <div class="post-wrap">
+                        <a class="image" href="#">
+                            <img src="@item.PictureModels.ImageUrl" alt="post" height="260" class="img-thumbnail">
+                        </a>
+                        <div class="content">
+                            <h4 class="title">
+                                <a href="#">
+                                    @item.PictureModels.Title
+                                </a>
+                            </h4>
+
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+
+    </div>
+</div>
+
+
+
+
+

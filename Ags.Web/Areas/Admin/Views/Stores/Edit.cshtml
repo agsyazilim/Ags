@@ -1,0 +1,172 @@
+﻿@model Ags.Data.Domain.Stores.Store
+
+@{
+    ViewData["Title"] = "Site Ayarları";
+    Html.SetActiveMenuItemSystemName("Stores");
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+
+                @Model.Name  <i class="fa fa-arrow-circle-left"></i>     <a asp-action="Index">Listeye Geri Dön</a>
+
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="panel-group">
+                        <div class="panel-default">
+                            <div class="panel-body">
+                                <form asp-action="Edit" class="form-horizontal">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="label-wrapper">
+                                                <label asp-for="Name" class="control-label"></label>   :
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input asp-for="Name" class="form-control" />
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="label-wrapper">
+                                                <label asp-for="Url" class="control-label"></label>  :
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input asp-for="Url" class="form-control" />
+                                            <span asp-validation-for="Url" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="label-wrapper">
+                                                @Html.DisplayNameFor(model => model.SslEnabled) :
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input asp-for="SslEnabled" />
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="label-wrapper">
+                                                <label asp-for="Hosts" class="control-label"></label>   :
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input asp-for="Hosts" class="form-control" />
+                                            <span asp-validation-for="Hosts" class="text-danger"></span>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="label-wrapper">
+                                                <label asp-for="DisplayOrder" class="control-label"></label>   :
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <input asp-for="DisplayOrder" class="form-control" />
+                                                <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                                                <script>
+
+                                                    $(document).ready(function () {
+                                                        $("#DisplayOrder").TouchSpin({
+                                                            min: -2147483648,
+                                                            max: 2147483647,
+                                                            decimals: 0,
+                                                            verticalbuttons: true,
+                                                            verticalupclass: "glyphicon glyphicon-chevron-up",
+                                                            verticaldownclass: "glyphicon glyphicon-chevron-down",
+                                                            buttondown_class: "btn",
+                                                            buttonup_class: "btn",
+                                                            postfix: ""
+                                                        });
+                                                    });
+                                                </script>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="label-wrapper">
+                                                <label asp-for="CompanyName" class="control-label"></label>    :
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input asp-for="CompanyName" class="form-control" />
+                                            <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="label-wrapper">
+                                                <label asp-for="CompanyAddress" class="control-label"></label>  :
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input asp-for="CompanyAddress" class="form-control" />
+                                            <span asp-validation-for="CompanyAddress" class="text-danger"></span>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="label-wrapper">
+                                                <label asp-for="CompanyPhoneNumber" class="control-label"></label>    :
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input asp-for="CompanyPhoneNumber" class="form-control" />
+                                            <span asp-validation-for="CompanyPhoneNumber" class="text-danger"></span>
+                                        </div>
+
+
+                                    </div>
+                                    <input type="hidden" asp-for="Id" />
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input type="submit" value="Kaydet" class="btn btn-warning" />
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

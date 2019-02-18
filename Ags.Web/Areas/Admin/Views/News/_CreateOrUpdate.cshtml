@@ -1,0 +1,15 @@
+﻿@model NewsItemModel
+
+<div asp-validation-summary="All"></div>
+<input asp-for="Id" type="hidden" />
+
+<div class="content">
+    <div class="form-horizontal">
+        <ags-tabs id="news-edit">
+            <ags-tab asp-name="tab-info" asp-title="Haber Girişi" asp-default="true">@await Html.PartialAsync("_CreateOrUpdate.Info", Model)</ags-tab>
+            <ags-tab asp-name="tab-seo" asp-title="SEO">@await Html.PartialAsync("_CreateOrUpdate.Seo", Model)</ags-tab>
+            <ags-tab asp-name="tab-picture" asp-title="Resim Ekle">@await Html.PartialAsync("_CreateOrUpdate.Picture", Model)</ags-tab>
+        </ags-tabs>
+    </div>
+</div>
+

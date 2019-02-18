@@ -1,0 +1,222 @@
+﻿@model Ags.Web.Areas.Admin.Models.Media.Slider.SliderModel
+<div class="panel-group">
+@if (Model.Id > 0)
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="productpictures-grid"></div>
+
+            <script>
+                    $(document).ready(function() {
+                        $("#productpictures-grid").kendoGrid({
+                            dataSource: {
+                                type: "json",
+                                transport: {
+                                    read: {
+                                        url: "@Html.Raw(Url.Action("GaleriPictureList", "Sliders"))",
+                                        type: "POST",
+                                        dataType: "json",
+                                        data: function() {
+                                            var data = {
+                                                Id: '@(Model.Id)'
+                                            };
+                                            addAntiForgeryToken(data);
+                                            return data;
+                                        }
+                                    },
+                                    update: {
+                                        url: "@Html.Raw(Url.Action("GaleriPictureUpdate", "Sliders"))",
+                                        type: "POST",
+                                        dataType: "json",
+                                        data: addAntiForgeryToken
+                                    },
+                                    destroy: {
+                                        url: "@Html.Raw(Url.Action("GaleriPictureDelete", "Sliders"))",
+                                        type: "POST",
+                                        dataType: "json",
+                                        data: addAntiForgeryToken
+                                    }
+                                },
+                                schema: {
+                                    data: "Data",
+                                    total: "Total",
+                                    errors: "Errors",
+                                    model: {
+                                        id: "Id",
+                                        fields: {
+                                            PictureUrl: { editable: false, type: "string" },
+                                            DisplayOrder: { editable: true, type: "number" },
+                                            OverrideAltAttribute: { editable: true, type: "string" },
+                                            OverrideTitleAttribute: { editable: true, type: "string" }
+                                        }
+                                    }
+                                },
+                                requestEnd: function(e) {
+                                    if (e.type == "update") {
+                                        this.read();
+                                    }
+                                },
+                                error: function(e) {
+                                    display_kendoui_grid_error(e);
+                                    // Cancel the changes
+                                    this.cancelChanges();
+                                },
+                                pageSize: @(Model.SliderSearchModel.PageSize),
+                                serverPaging: true,
+                                serverFiltering: true,
+                                serverSorting: true
+                            },
+                            pageable: {
+                                refresh: true,
+                                pageSizes: [@(Model.SliderSearchModel.AvailablePageSizes)],
+                                @await Html.PartialAsync("_GridPagerMessages")
+                            },
+                            editable: {
+                                confirmation: "Silmek istediğinizden Emin misiniz?",
+                                mode: "inline"
+                            },
+                            scrollable: false,
+                            columns: [
+                            {
+                                field: "PictureUrl",
+                                title: "Foto",
+                                template: '<a href="#=PictureUrl#" target="_blank"><img alt="#=PictureId#" src="#=PictureUrl#" width="150" /></a>',
+                                width: 200
+                            }, {
+                                field: "DisplayOrder",
+                                title: "Sırası",
+                                //integer format
+                                format: "{0:0}",
+                                width: 150
+                            }, {
+                                field: "OverrideAltAttribute",
+                                title: "Alt Bilgi",
+                                width: 200
+                            }, {
+                                field: "OverrideTitleAttribute",
+                                title: "Başlık Bilgi",
+                                width: 200
+                            }, {
+                                command: [
+                                {
+                                    name: "edit",
+                                    text: {
+                                        edit: "Düzenle",
+                                        update: "Güncelle",
+                                        cancel: "Vazgeç"
+                                    }
+                                }, {
+                                    name: "destroy",
+                                    text: "Sil"
+                                }
+                                ],
+                                width: 200
+                            }
+                            ]
+                        });
+                    });
+            </script>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Ekle
+        </div>
+        <div class="panel-body">
+            <script>
+                    $(document).ready(function() {
+                        $('#addProductPicture').click(function() {
+                            var pictureId = $("#@Html.IdFor(model => model.AddGaleryPictureModel.PictureId)").val();
+                            var overrideAltAttribute = $("#@Html.IdFor(model => model.AddGaleryPictureModel.OverrideAltAttribute)").val();
+                            var overrideTitleAttribute = $("#@Html.IdFor(model => model.AddGaleryPictureModel.OverrideTitleAttribute)").val();
+                            var displayOrder = $("#@Html.IdFor(model => model.AddGaleryPictureModel.DisplayOrder)").val();
+
+                            if (pictureId == 0) {
+                                alert('Upload picture first');
+                                return;
+                            }
+
+                            $('#addProductPicture').attr('disabled', true);
+
+                            var postData = {
+                                pictureId: pictureId,
+                                displayOrder: displayOrder,
+                                overrideAltAttribute: overrideAltAttribute,
+                                overrideTitleAttribute: overrideTitleAttribute,
+                                galeriId: '@Model.Id'
+                            };
+                            addAntiForgeryToken(postData);
+
+                            $.ajax({
+                                cache: false,
+                                type: "POST",
+                                url: "@Url.Action("GaleriPictureAdd", "Sliders")",
+                                data: postData,
+                                success: function (data) {
+                                    $('#addProductPicture').attr('disabled', false);
+                                    if (!data.Result)
+                                        return;
+                                    var grid = $("#productpictures-grid");
+                                    grid.data('kendoGrid').dataSource.read();
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    alert('Failed to add product picture.');
+                                    $('#addProductPicture').attr('disabled', false);
+                                }
+                            });
+                        });
+                    });
+            </script>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddGaleryPictureModel.PictureId" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="AddGaleryPictureModel.PictureId" />
+                    <span asp-validation-for="AddGaleryPictureModel.PictureId"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddGaleryPictureModel.OverrideAltAttribute" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="AddGaleryPictureModel.OverrideAltAttribute" />
+                    <span asp-validation-for="AddGaleryPictureModel.OverrideAltAttribute"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddGaleryPictureModel.OverrideTitleAttribute" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="AddGaleryPictureModel.OverrideTitleAttribute" />
+                    <span asp-validation-for="AddGaleryPictureModel.OverrideTitleAttribute"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <ags-label asp-for="AddGaleryPictureModel.DisplayOrder" />
+                </div>
+                <div class="col-md-9">
+                    <ags-editor asp-for="AddGaleryPictureModel.DisplayOrder" />
+                    <span asp-validation-for="AddGaleryPictureModel.DisplayOrder"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-9 col-md-offset-3">
+                    <button type="button" id="addProductPicture" class="btn btn-primary">Ekle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+           </div>
+    </div>
+}
+</div>

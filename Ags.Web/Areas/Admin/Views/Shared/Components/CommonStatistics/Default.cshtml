@@ -1,0 +1,160 @@
+﻿@model CommonStatisticsModel
+@{
+    const string panelId = "agspanel-common-statistics-box";
+    const string hidePanelAttributeName = "HideCommonStatisticsPanel";
+    var hidePanel = false;
+}
+
+<div class="box box-info @if(hidePanel){<text>collapsed-box</text>}" id="@panelId">
+    <div class="box-header with-border clearfix">
+        <div class="box-title">
+            <i class="fa ion-stats-bars"></i>
+            istatistikler
+        </div>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                @if (hidePanel)
+                {
+                    <text><i class="fa fa-plus"></i></text>
+                }
+                else
+                {
+                    <text><i class="fa fa-minus"></i></text>
+                }
+            </button>
+        </div>
+    </div>
+    <div class="box-body">
+
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-fuchsia">
+                <div class="inner">
+                    <h3>@Model.NumberOfDayVisitors</h3>
+                    <p>Ziyaret Sayısı(Günlük)</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-android-contacts"></i>
+                </div>
+                <a class="small-box-footer">
+                    Ziyaret Listesi
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>@Model.NumberOfTotalVisitCount</h3>
+                    <p>Ziyaret Sayısı(Toplam)</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-android-contacts"></i>
+                </div>
+                <a class="small-box-footer">
+                    Ziyaret Listesi
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>@Model.NumberOfCustomers</h3>
+                    <p>Kayıtlı Kullanıcılar</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a asp-controller="Customer" asp-action="Index" class="small-box-footer">
+                    Kullanıcı Listesine Git
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+       <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>@Model.NumberOfNewsRead</h3>
+                    <p>Okunan Haberler</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-book-outline"></i>
+                </div>
+                <a asp-controller="News" asp-action="List" class="small-box-footer">
+                    Haberl Listesine Git
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>@Model.NumberOfReadBlogPost</h3>
+                    <p>Okunan Köşe Yazıları</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-book"></i>
+                </div>
+                <a asp-controller="Blog" asp-action="List" class="small-box-footer">
+                    Yazı Listesi
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>@Model.NumberOfNotReadBlogPost</h3>
+                    <p>Okunmayan Köşe Yazıları</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-book"></i>
+                </div>
+                <a asp-controller="Blog" asp-action="List" class="small-box-footer">
+                    Yazı Listesi
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+         <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>@Model.NumberOfNewsRead</h3>
+                    <p>Okunan Haberler</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-book"></i>
+                </div>
+                <a asp-controller="News" asp-action="List" class="small-box-footer">
+                    Haber Listesi
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>@Model.NumberOfNotReadNews</h3>
+                    <p>Okunmayan Haberler</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-book"></i>
+                </div>
+                <a asp-controller="News" asp-action="List" class="small-box-footer">
+                    Haber Listesi
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $('#@panelId').on('click',
+                    'button[data-widget="collapse"]',
+                    function() {
+                        var collapsed = !$('#@panelId').hasClass('collapsed-box');
+                    });
+            });
+        </script>
+    </div>
+</div>

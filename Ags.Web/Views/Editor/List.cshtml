@@ -1,0 +1,59 @@
+﻿@model BlogPostListModel
+@{
+    ViewBag.Title = Model.EditorModel.BlogPostModel.MetaTitle??Model.EditorModel.FirstName;
+    ViewBag.MetaDescription = Model.EditorModel.BlogPostModel.MetaDescription;
+    ViewBag.MetaKeywords = Model.EditorModel.BlogPostModel.MetaKeywords;
+    Layout = "_OneColumn";
+}
+
+@section banner{
+    <div class="page-banner-section section mt-30 mb-30" data-title="List">
+        <div class="container">
+            <div class="row row-1">
+                <div class="col-12">
+                    <div class="page-banner" style="background-image: url(/images/uploaded/categori/asyis.jpg)">
+                        <h2>Tüm Yazılar</h2>
+                        <ol class="page-breadcrumb">
+                            <li><a href="#">Anasayfa</a></li>
+                            <li class="active">Tüm Yazılar</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (Model.BlogPosts.Count > 0)
+{
+    <div class="post-block-wrapper" data-title="List">
+        <div class="head"><h4 class="title">Yazılarım</h4></div>
+        <div class="body">
+            @foreach (var item in Model.BlogPosts)
+            {
+                <div class="single-blog mb-50">
+                    <div class="blog-wrap">
+                            <div class="meta fix">
+                                <a href="#" class="meta-item category">@item.Title</a>
+                                <a href="#" class="meta-item author"><img src="@Model.EditorModel.AvatarUrl" alt="post author">@item.EditorModel.FirstName @item.EditorModel.LastName</a>
+                                <span class="meta-item date"><i class="fa fa-clock-o"></i>@item.CreatedOn.ToString("d")</span>
+                            </div>
+                            <h3 class="title"><a href="@Url.Action("BlogPost", "Editor", new {blogPostId = item.Id})">@item.Title</a></h3>
+                            <a href="@Url.Action("BlogPost", "Editor", new {blogPostId = item.Id})" class="image">
+                            </a>
+                        <div class="content">
+                            @item.BodyOverview
+                            <a href="@Url.Action("BlogPost", "Editor", new {blogPostId = item.Id})" class="read-more">devamını oku</a>
+                        </div>
+                        </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+@section PostSectionLeft{
+    @await Component.InvokeAsync("PostSectionLeft").ConfigureAwait(false)
+}
+@section PostSectionRigth {
+    @await Component.InvokeAsync("PostSectionRigth").ConfigureAwait(false)
+}
+

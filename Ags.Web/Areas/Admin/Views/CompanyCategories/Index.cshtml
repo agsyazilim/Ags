@@ -1,0 +1,85 @@
+﻿@model IEnumerable<CompanyCategoryModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <a asp-action="Create" class="btn btn-warning">Yeni Oluştur</a>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-header">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model=>model.Name)
+                            </th>
+
+                            <th>
+                                @Html.DisplayName("Oluşturma Tarihi")
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StartDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EndDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Published)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td style="text-align: center">
+                                    @Html.DisplayFor(modelItem => item.CreateDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Published)
+                                </td>
+                                <td>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-warning">işlemler</button>
+                                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a asp-action="Edit" asp-route-id="@item.Id">Güncelle</a></li>
+                                            <li><a asp-action="Details" asp-route-id="@item.Id">Detay</a></li>
+                                            <li> <a asp-action="Delete" asp-route-id="@item.Id">Sil</a></li>
+
+                                        </ul>
+                                    </div>
+
+
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer">
+                 <a asp-action="Create" class="btn btn-warning">Yeni Oluştur</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>

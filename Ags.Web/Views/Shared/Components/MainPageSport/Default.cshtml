@@ -1,0 +1,100 @@
+﻿@model CategoriModel
+<div class="row mb-50" data-title="MainPageSport">
+    <div class="col-12">
+        <div class="post-block-wrapper">
+            <div class="head sports-head">
+                <h4 class="title">@Model.Name</h4>
+            </div>
+            <div class="body pb-0">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="sports-cat-1">
+                        <div class="row">
+                            <div class="col-lg-8 col-12">
+                                <div class="row">
+                                    <div class="post post-overlay post-large sports-post col-12 mb-20">
+                                        @foreach (var item in Model.LargeNewsModels)
+                                        {
+                                            var newsItem = item;
+                                            if (newsItem.BigNews)
+                                            {
+                                                <div class="post-wrap">
+                                                    <div class="image"><img src="@newsItem.PictureUrl" width="750" height="450" alt="post"></div>
+                                                    <div class="content">
+                                                        <h2 class="title">
+                                                            <a href="@Url.Action("Index","News",new{id=newsItem.Id,title=newsItem.SeName})">
+                                                                @newsItem.Title
+                                                            </a>
+                                                        </h2>
+                                                        <div class="meta fix">
+                                                            <a href="#" class="meta-item author"><i class="fa fa-user"></i> @newsItem.CustomerName </a>
+                                                            <span class="meta-item date"><i class="fa fa-clock-o"></i>@newsItem.CreatedOn.ToShortDateString()</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        }
+
+                                    </div>
+                                    @foreach (var item in Model.NewsModels)
+                                    {
+                                        <div class="post post-overlay sports-post col-md-6 mb-20">
+                                            <div class="post-wrap">
+                                                <div class="image"><img src="@item.PictureUrl" alt="post"></div>
+                                                <div class="content">
+                                                    <h4 class="title"><a href="#">@item.Title</a></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        break;
+                                    }
+                                    @if (Model.VideoId > 0)
+                                    {
+                                        <div class="post post-overlay sports-post col-md-6 mb-20">
+                                            <div class="post-wrap">
+                                                @foreach (var item in Model.VideoGalleryModel.VideoModels)
+                                                {
+                                                    <a href="@item.EmbedCode" class="image video-popup">
+                                                        <img src="@(item.PictureId == 0 ? item.PictureUrl : item.ResimUrl)" alt="post">
+                                                        <span class="video-btn"><i class="fa fa-play"></i></span>
+                                                    </a>
+                                                    break;
+                                                }
+
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-6 col-12 mb-20">
+                                        @foreach (var item in Model.NewsModels)
+                                        {
+                                            <div class="post post-small post-list sports-post post-separator-border">
+                                                <div class="post-wrap">
+                                                    <a class="image" href="@Url.Action("Index","News",new{id=item.Id,title=item.SeName})">
+                                                        <img src="@item.PictureUrl" alt="post">
+                                                    </a>
+                                                    <div class="content">
+                                                        <h5 class="title">
+                                                            <a href="@Url.Action("Index","News",new{id=item.Id,title=item.SeName})">
+                                                                @item.Title
+                                                            </a>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            break;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

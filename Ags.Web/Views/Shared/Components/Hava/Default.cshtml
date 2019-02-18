@@ -1,0 +1,142 @@
+﻿@model StateProvidenceModel
+<div class="single-sidebar col-lg-12 col-md-6 col-12" data-title="Hava">
+    <div class="sidebar-block-wrapper">
+        <div class="head feature-head">
+            <h4 class="title">HAVA DURUMU</h4>
+        </div>
+        <div class="body">
+            <div id="openweathermap-widget-15">
+                <div id="container-openweathermap-widget-15">
+                    <div class="widget-right weather-right--type1 widget-right--brown">
+                        <div class="widget-right__header widget-right__header--brown">
+                            <div class="widget-right__layout">
+                                <div>
+                                    <h2 class="widget-right__title">Izmir, TR</h2>
+                                    <p class="widget-right__description"></p>
+                                    <ags-select asp-for="SelectStateId" asp-items="Model.StateList" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-right weather-right--brown">
+                            <div class="weather-right__layout">
+                                <div class="weather-right__temperature">12<span>°C</span></div>
+                                <div class="weather-right__weather">
+                                    <div class="weather-right-card">
+                                        <table class="weather-right__table">
+                                            <tbody>
+                                                <tr class="weather-right__items">
+                                                    <th colspan="2" class="weather-right__item">Detaylar</th>
+                                                </tr>
+                                            <tr class="weather-right__items">
+                                                <td class="weather-right__item">Sıcaklık</td>
+                                                <td class="weather-right__item weather-right__feels">12<span>°C</span></td>
+                                            </tr>
+                                            <tr class="weather-right-card__items">
+                                                <td class="weather-right__item">En Yüksek</td>
+                                                <td class="weather-right__item weather-right__wind-low"></td>
+                                            </tr>
+                                                <tr class="weather-right__items">
+                                                    <td class="weather-right__item">En Düşük</td>
+                                                    <td class="weather-right__item weather-right__wind-speed">1.5 m/s </td>
+                                                </tr>
+                                                <tr class="weather-right-card__items">
+                                                    <td class="weather-right__item">Nem</td>
+                                                    <td class="weather-right__item weather-right__humidity">81%</td>
+                                                </tr>
+
+                                                <tr class="weather-right-card__items">
+                                                    <td class="weather-right__item">Basınç</td>
+                                                    <td class="weather-right__item weather-right__pressure">1014 hPa</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-right__footer widget-right__footer--brown">
+                            <div class="widget-right__layout">
+                                <a href="#" target="_blank" class="widget-right__link"></a>
+                                <div class="widget-right__date">@DateTime.Now.ToLongTimeString()</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" on-content-loaded="true">
+    $(document).ready(function () {
+        $("#SelectStateId option").each(function(){
+            if ($(this).val() === "IZMIR")
+                $(this).attr("selected","true");
+        });
+        $.ajax({
+            type: "Post",
+            url: '@Url.Action("HavaDurumu","Common",new{id="IZMIR"})',
+            data: {},
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                var main = response.main;
+                var baslik = document.getElementsByClassName("widget-right__title");
+                $(baslik).empty();
+                $(baslik).append(response.name.toUpperCase() + ",TR");
+                $(document.getElementsByClassName("weather-right__temperature")).empty();
+                $(document.getElementsByClassName("weather-right__temperature")).append(Math.round(main.temp,0), "<span>°C</span>");
+                $(document.getElementsByClassName("weather-right__feels")).empty();
+                $(document.getElementsByClassName("weather-right__feels")).append(main.temp, "<span>°C</span>");
+                $(document.getElementsByClassName("weather-right__pressure")).empty();
+                $(document.getElementsByClassName("weather-right__pressure")).append(main.pressure);
+                $(document.getElementsByClassName("weather-right__humidity")).empty();
+                $(document.getElementsByClassName("weather-right__humidity")).append(main.humidity, "%");
+                $(document.getElementsByClassName("weather-right__wind-low")).empty();
+                $(document.getElementsByClassName("weather-right__wind-low")).append(main.temp_min);
+                $(document.getElementsByClassName("weather-right__wind-speed")).empty();
+                $(document.getElementsByClassName("weather-right__wind-speed")).append(main.temp_min);
+            },
+            complete: function() {
+                $("#SelectStateId option").each(function(){
+                    if ($(this).val() === "IZMIR")
+                        $(this).attr("selected","true");
+                });
+            }
+        });
+    });
+    $("#@Html.IdFor(model => model.SelectStateId)").on('change', function () {
+        var selectedItem = $(this).val();
+        $.ajax({
+            type: "Post",
+            url: '/Common/HavaDurumu/'+selectedItem,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response) {
+
+                    var main = response.main;
+                    var baslik = document.getElementsByClassName("widget-right__title");
+                    $(baslik).empty();
+                    $(baslik).append(response.name.toUpperCase() + ",TR");
+                    $(document.getElementsByClassName("weather-right__temperature")).empty();
+                    $(document.getElementsByClassName("weather-right__temperature")).append(Math.round(main.temp,0), "<span>°C</span>");
+                    $(document.getElementsByClassName("weather-right__feels")).empty();
+                    $(document.getElementsByClassName("weather-right__feels")).append(main.temp, "<span>°C</span>");
+                    $(document.getElementsByClassName("weather-right__pressure")).empty();
+                    $(document.getElementsByClassName("weather-right__pressure")).append(main.pressure);
+                    $(document.getElementsByClassName("weather-right__humidity")).empty();
+                    $(document.getElementsByClassName("weather-right__humidity")).append(main.humidity, "%");
+                    $(document.getElementsByClassName("weather-right__wind-low")).empty();
+                    $(document.getElementsByClassName("weather-right__wind-low")).append(main.temp_min);
+                    $(document.getElementsByClassName("weather-right__wind-speed")).empty();
+                    $(document.getElementsByClassName("weather-right__wind-speed")).append(main.temp_min);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+            }
+        });
+    });
+
+</script>

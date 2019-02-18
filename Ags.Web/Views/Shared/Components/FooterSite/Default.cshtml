@@ -1,0 +1,25 @@
+﻿@using Ags.Data.Domain
+@using Ags.Services.Stores
+@inject StoreInformationSettings StoreInformationSettings
+@inject  IStoreService StoreService
+<div class="footer-top-section section bg-dark" data-title="FooterSite">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="footer-widget col-xl-4 col-md-6 col-12 mb-60">
+                <div class="content fix">
+                    @await Component.InvokeAsync("TopicBlock", new { systemName = "hakkimizda" }).ConfigureAwait(false)
+                    <ol class="footer-contact">
+                        <li><i class="fa fa-home"></i>@StoreService.GetStoreById(1).CompanyAddress</li>
+                        <li><i class="fa fa-envelope-open"></i>@StoreInformationSettings.ContactEmail</li>
+                        <li><i class="fa fa-headphones"></i>@StoreService.GetStoreById(1).CompanyPhoneNumber</li>
+                    </ol>
+                    <div class="footer-social">
+                        @await Component.InvokeAsync("SocialButtons").ConfigureAwait(false)
+                    </div>
+                </div>
+            </div>
+            @await Component.InvokeAsync("PopulerNews").ConfigureAwait(false)
+            @await Component.InvokeAsync("TopNews").ConfigureAwait(false)
+        </div>
+    </div>
+</div>

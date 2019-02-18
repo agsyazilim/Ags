@@ -1,0 +1,150 @@
+﻿@model CompanyModel
+
+<div class="content">
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="PictureId" />
+
+                    </div>
+                    <div class="col-md-9">
+                        <ags-editor asp-for="PictureId" />
+                        <span asp-validation-for="PictureId"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="Name" asp-display-hint="true"/>
+                    </div>
+                    <div class="col-md-9">
+                        <ags-editor asp-for="Name" asp-required="true" />
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="CompanyCategoryId" asp-display-hint="true"/>
+                    </div>
+                    <div class="col-md-9">
+                        <ags-select asp-for="CompanyCategoryId" asp-items="@Model.AvailableCatagories" />
+                        <span asp-validation-for="CompanyCategoryId"></span>
+                    </div>
+
+                </div>
+                 <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="Description" asp-display-hint="true"/>
+
+                    </div>
+                    <div class="col-md-9">
+                        <ags-editor asp-for="Description" asp-required="true" asp-template="RichEditor"/>
+                        <span asp-validation-for="Description"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="Address" asp-display-hint="true"/>
+
+                    </div>
+                    <div class="col-md-9">
+                        <ags-textarea asp-for="Address" asp-required="true"/>
+                        <span asp-validation-for="Address"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="StateProvenceId" />
+                    </div>
+                    <div class="col-md-9">
+                        <ags-select asp-for="StateProvenceId" asp-items="@Model.AvailableStateProvince" asp-required="true"/>
+                        <span asp-validation-for="StateProvenceId"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="Phone" asp-display-hint="true"/>
+
+                    </div>
+                    <div class="col-md-9">
+                        <ags-editor asp-for="Phone" />
+                        <span asp-validation-for="Phone"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="Gsm" asp-display-hint="true"/>
+
+                    </div>
+                    <div class="col-md-9">
+                        <ags-editor asp-for="Gsm" />
+                        <span asp-validation-for="Gsm"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="Www" />
+
+                    </div>
+                    <div class="col-md-9">
+                        <ags-editor asp-for="Www" />
+                        <span asp-validation-for="Www"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="VideoEmbedCode" />
+
+                    </div>
+                    <div class="col-md-9">
+                        <ags-textarea asp-for="VideoEmbedCode" />
+                        <span asp-validation-for="VideoEmbedCode"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="StartDate" />
+
+                    </div>
+                    <div class="col-md-9">
+                        <ags-editor asp-for="StartDate" />
+                        <span asp-validation-for="StartDate"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="EndDate" class="control-label" />
+                    </div>
+                    <div class="col-md-9">
+
+                        <ags-editor asp-for="EndDate" />
+                        <span asp-validation-for="EndDate"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <ags-label asp-for="Published" />
+                    </div>
+                    <div class="col-md-9"></div>
+                    <ags-editor asp-for="Published" />
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

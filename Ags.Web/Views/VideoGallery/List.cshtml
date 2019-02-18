@@ -1,0 +1,134 @@
+﻿@using Ags.Web.Extensions
+@model VideoGalleryListModel
+@{
+    ViewData["Title"] = "List";
+    Layout = "_OneColumn";
+    var index = 0;
+}
+
+
+@if (Model.VideoGalleryModels.Count > 0)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <div class="head">
+                <h1 class="title"><i class="fa fa-image"></i> Videolar</h1>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <ul class="post-block-tab-list feature-post-tab-list nav d-none d-md-block">
+                @foreach (var galleryModel in Model.VideoGalleryModels)
+                {
+                    <li>
+                        <a href="@Url.Action("VideoDetail","VideoGallery",new{id=galleryModel.Id})">
+                            @galleryModel.Name
+                        </a>
+                    </li>
+                    if (index == 4)
+                    {
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Daha Fazla</a>
+                            <!-- Dropdown -->
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="@Url.Action("VideoDetail","VideoGallery",new{id=galleryModel.Id})">
+                                        @galleryModel.Name
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    }
+                    index++;
+                }
+
+            </ul>
+            <!-- Tab List Start -->
+            <ul class="post-block-tab-list feature-post-tab-list nav d-sm-block d-md-none">
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Galeriler</a>
+                    <!-- Dropdown -->
+                    <ul class="dropdown-menu">
+                        @foreach (var galleryModel in Model.VideoGalleryModels)
+                        {
+                            <li>
+                                <a href="#">
+                                    @galleryModel.Name
+                                </a>
+                            </li>
+
+
+                        }
+                    </ul>
+                </li>
+            </ul><!-- Tab List End -->
+        </div>
+    </div>
+
+    <div class="post-block-wrapper mb-50 mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="head">
+                        <h4 class="title"> Galeriler</h4>
+                    </div>
+                    <div class="body">
+                        <div class="three-column-post-carousel column-post-carousel post-block-carousel  life-style-post-carousel row" id="company">
+                            @foreach (var item in Model.VideoModels)
+                            {
+                                <div class="post post-overlay sports-post col-md-6 mb-20">
+                                    <div class="post-wrap">
+
+                                        <!-- Image -->
+                                        <a href="@item.EmbedCode" class="image video-popup">
+                                            <img src="@item.PictureUrl" alt="post">
+                                            <!-- Video Popup -->
+                                            <span class="video-btn"><i class="fa fa-play"></i></span>
+                                        </a>
+
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-block-wrapper">
+        <div class="body">
+            <div class="row">
+                @foreach (var item in Model.VideoModels)
+                {
+                    <div class="post post-overlay sports-post col-md-6 mb-20">
+                        <div class="post-wrap">
+
+                            <!-- Image -->
+                            <a href="@item.EmbedCode" class="image video-popup">
+                                <img src="@item.PictureUrl" alt="post">
+                                <!-- Video Popup -->
+                                <span class="video-btn"><i class="fa fa-play"></i></span>
+                            </a>
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+            @{
+                var pager = Html.Pager(Model.VideoGalleryPagingFilteringModel).QueryParam("pagenumber");
+            }
+            @if (!pager.IsEmpty())
+            {
+                <div class="pager">
+                    @pager
+                </div>
+            }
+        </div>
+    </div>
+
+}
+
+
