@@ -1737,7 +1737,7 @@ blockquote.blockquote {
 
                 .main-menu nav > ul > li:hover .sub-menu, .main-menu nav > ul > li:hover .mega-menu {
                     opacity: 1;
-                    z-index: 999;
+                    z-index: 1000;
                     visibility: visible;
                 }
 
@@ -2324,6 +2324,7 @@ blockquote.blockquote {
     border: 1px solid #f1f1f1;
     float: left;
     width: 100%; /*-- Post Block Head --*/ /*-- Post Block Body --*/
+
 }
 
     .post-block-wrapper.dark {
@@ -3288,6 +3289,7 @@ blockquote.blockquote {
     -webkit-box-direction: normal;
     -ms-flex-flow: row;
     flex-flow: row; /*-- Image --*/ /*-- Content --*/
+    z-index: 1000;
 }
 
     .post.post-small.post-list .post-wrap .image {
@@ -3891,7 +3893,7 @@ blockquote.blockquote {
         line-height: 24px;
     }
 }
-
+.post-wrap{ z-index: 1000;}
 /*-- Single Post --*/
 .single-post .post-wrap { /*-- Content --*/ /*-- Tags & Social --*/
 }
@@ -4979,7 +4981,7 @@ blockquote.blockquote {
 /*-- Sidebar Tab List For Latest & Popular News --*/
 .sidebar-tab-list {
     margin: -15px -20px;
-    z-index: 2;
+    z-index: 1000;
     position: relative; /*-- Active Color For Category --*/
 }
 
@@ -5731,7 +5733,7 @@ blockquote.blockquote {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: 999;
 }
 /* Right Banner */
 .ads160x600r {
@@ -5740,7 +5742,7 @@ blockquote.blockquote {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: 999;
 }
 
 .reklamKapat {
@@ -6928,6 +6930,7 @@ table#namzaz-vakti {
     margin-right: 30px;
     position: relative;
     float: left;
+    z-index: 1000;
 }
 .fa-lg {
     font-size: 1.33333em;

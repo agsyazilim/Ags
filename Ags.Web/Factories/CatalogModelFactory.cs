@@ -354,6 +354,104 @@ namespace Ags.Web.Factories
             return model;
         }
 
+        public MainPageModel PrepareMainPageModel(List<Category> categories)
+        {
+            if (categories == null)
+            {
+                throw new ArgumentNullException(nameof(categories));
+            }
+
+            var model = new MainPageModel();
+            foreach (var category in categories)
+            {
+                var catModel = new MainCategoryModel
+                {
+                    Name = category.Name,
+                    SeName = _urlRecordService.GetSeName(category),
+                    Id = category.Id
+                };
+                var newses = _newsService.GetAllNews(categoryId: category.Id, showHidden: true, approved: true);
+                var newsModel = newses.Select(x => new NewsPopulerModel
+                {
+                    SeName = _urlRecordService.GetSeName(x),
+                    Title = x.Title,
+                    Id = x.Id,
+                    PictureUrl = _pictureService.GetPictureUrl(x.PictureId),
+                    Short = x.Short.Chop("20")
+                }).ToList();
+                var bigNewses = _newsService.GetAllNews(categoryId: category.Id, showHidden: true, approved: true).Where(x => x.BigNews);
+                var bigNewsModel = bigNewses.Select(x => new NewsPopulerModel
+                {
+                    SeName = _urlRecordService.GetSeName(x),
+                    Title = x.Title,
+                    Id = x.Id,
+                    PictureUrl = _pictureService.GetPictureUrl(x.PictureId),
+                    Short = x.Short.Chop("20")
+                }).ToList();
+                catModel.NewsModels = newsModel;
+                catModel.NewsBigModels = bigNewsModel;
+                model.MainCategoryModel.Add(catModel);
+            }
+            return model;
+        }
+
+        public MainPageDownModel PrepareMainPageDownModel(Category category)
+        {
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category));
+            }
+
+            var model = new MainPageDownModel();
+            var catModel = new MainDownCategoryModel
+            {
+                Name = category.Name,
+                SeName = _urlRecordService.GetSeName(category),
+                Id = category.Id
+            };
+            var newses = _newsService.GetAllNews(categoryId: category.Id, showHidden: true, approved: true);
+            var newsModel = newses.Select(x => new NewsPopulerModel
+            {
+                SeName = _urlRecordService.GetSeName(x),
+                Title = x.Title,
+                Id = x.Id,
+                PictureUrl = _pictureService.GetPictureUrl(x.PictureId),
+                Short = x.Short.Chop("20")
+            }).ToList();
+            catModel.NewsModels = newsModel;
+            model.MainCategoryModel = catModel;
+            return model;
+        }
+
+        public MainPageDownCenterModel PrepareMainPageDonwCenterModel(Category category)
+        {
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category));
+            }
+
+            var model = new MainPageDownCenterModel();
+            var catModel = new MainDownCenterCategoryModel
+            {
+                Name = category.Name,
+                SeName = _urlRecordService.GetSeName(category),
+                Id = category.Id
+            };
+            var bigNewses = _newsService.GetAllNews(categoryId: category.Id, showHidden: true, approved: true)
+                 .Where(x => x.BigNews);
+            var bigNewsModel = bigNewses.Select(x => new NewsPopulerModel
+            {
+                SeName = _urlRecordService.GetSeName(x),
+                Title = x.Title,
+                Id = x.Id,
+                PictureUrl = _pictureService.GetPictureUrl(x.PictureId),
+                Short = x.Short.Chop("20")
+            }).ToList();
+            catModel.LargeNewsModels = bigNewsModel;
+            model.MainCategoryModel = catModel;
+            return model;
+        }
+
         /// <summary>
         /// Prepare category template view path
         /// </summary>

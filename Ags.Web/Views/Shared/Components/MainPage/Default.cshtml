@@ -1,87 +1,86 @@
 ﻿@using Ags.Web.Infrastructure
-@model IEnumerable<CategoriModel>
+@model MainPageModel
 @{
     int index = 0;
     int subindex = 0;
 }
 
-    <div class="post-block-wrapper">
-        <div class="head feature-head">
-            <ul class="post-block-tab-list feature-post-tab-list nav d-none d-md-block">
-                @foreach (var tab in Model)
-                {
-                    <li>
-                        <a @(index == 0 ? "class='active'" : "") data-toggle="tab" href="#tab-@(tab.SeName)">
-                            <h4 class="title">
-                                @tab.Name
-                            </h4>
-                        </a>
-                    </li>
-                    index++;
-                }
-            </ul>
-            <ul class="post-block-tab-list feature-post-tab-list nav d-sm-block d-md-none">
+<div class="post-block-wrapper">
+    <div class="head feature-head">
+        <ul class="post-block-tab-list feature-post-tab-list nav d-none d-md-block">
+            @foreach (var tab in Model.MainCategoryModel)
+            {
                 <li>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Kategori</a>
-                    <ul class="dropdown-menu">
-                        @foreach (var tab in Model)
-                        {
-                            <li>
-                                <a @(index == 0 ? "class='active'" : "") data-toggle="tab" href="#tab-@(tab.SeName)">
-                                    @tab.Name
-
-                                </a>
-
-                            </li>
-                            index++;
-                        }
-                    </ul>
+                    <a @(index == 0 ? "class='active'" : "") data-toggle="tab" href="#tab-@(tab.SeName)">
+                        <h4 class="title">
+                            @tab.Name
+                        </h4>
+                    </a>
                 </li>
-            </ul>
-        </div>
-        <div class="body pb-0">
-            <div class="tab-content">
-                @foreach (var item in Model)
-                {
-                    <div class="tab-pane fade @(subindex==0?"show active":"")" id="tab-@(item.SeName)">
-                        <div class="row">
-                            <div class="col-md-6 col-12 mb-20">
-                                <div class="post feature-post post-separator-border">
-                                    @foreach (var item1 in item.LargeNewsModels)
-                                    {
-                                        <div class="post-wrap">
-                                            <a class="image" href="@Url.Action("Index", "News", new {id = item1.Id, title = item1.SeName})">
-                                                <img src="@item1.PictureUrl" alt="post">
-                                            </a>
-                                            <div class="content">
-                                                <h4 class="title"><a href="@Url.Action("Index","News",new{id=item1.Id,title=item1.SeName})">@item1.Title</a></h4>
-                                                <p>@item1.Short.Chop("200")</p>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12 mb-20">
-                                <div class="post post-small post-list feature-post post-separator-border">
-                                    @foreach (var items2 in item.NewsModels)
-                                    {
-                                        <div class="post-wrap">
-                                            <a class="image" href="@Url.Action("Index","News",new{id=items2.Id,title=items2.SeName})"><img src="@items2.PictureUrl" alt="post"></a>
-                                            <div class="content">
-                                                <h5 class="title"><a href="@Url.Action("Index","News",new{id=items2.Id,title=items2.SeName})">@items2.Title</a></h5>
-                                            </div>
+                index++;
+            }
+        </ul>
+        <ul class="post-block-tab-list feature-post-tab-list nav d-sm-block d-md-none">
+            <li>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Kategori</a>
+                <ul class="dropdown-menu">
+                    @foreach (var tab in Model.MainCategoryModel)
+                    {
+                        <li>
+                            <a @(index == 0 ? "class='active'" : "") data-toggle="tab" href="#tab-@(tab.SeName)">
+                                @tab.Name
 
-                                        </div>
-                                    }
-                                </div>
-                            </div>
+                            </a>
 
+                        </li>
+                        index++;
+                    }
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="body pb-0">
+        <div class="tab-content">
+            @foreach (var item in Model.MainCategoryModel)
+            {
+                <div class="tab-pane fade @(subindex==0?"show active":"")" id="tab-@(item.SeName)">
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-20">
+                            <div class="post feature-post post-separator-border">
+                                @foreach (var item1 in item.NewsBigModels)
+                                {
+                                    <div class="post-wrap">
+                                        <a class="image" href="@Url.Action("Index", "News", new {id = item1.Id, title = item1.SeName})">
+                                            <img src="@item1.PictureUrl" alt="post">
+                                        </a>
+                                        <div class="content">
+                                            <h4 class="title"><a href="@Url.Action("Index","News",new{id=item1.Id,title=item1.SeName})">@item1.Title</a></h4>
+                                            <p>@item1.Short.Chop("200")</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
                         </div>
+                        <div class="col-md-6 col-12 mb-20">
+                            <div class="post post-small post-list feature-post post-separator-border">
+                                @foreach (var items2 in item.NewsModels)
+                                {
+                                    <div class="post-wrap">
+                                        <a class="image" href="@Url.Action("Index","News",new{id=items2.Id,title=items2.SeName})"><img src="@items2.PictureUrl" alt="post"></a>
+                                        <div class="content">
+                                            <h5 class="title"><a href="@Url.Action("Index","News",new{id=items2.Id,title=items2.SeName})">@items2.Title</a></h5>
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
                     </div>
-                    subindex++;
-                }
-            </div>
+                </div>
+                subindex++;
+            }
         </div>
     </div>
-
+</div>
 

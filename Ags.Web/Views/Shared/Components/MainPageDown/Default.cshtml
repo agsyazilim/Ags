@@ -1,12 +1,12 @@
-﻿@model CategoriModel
+﻿@model MainPageDownModel
 <div class="col-lg-4 col-md-6 col-12 mb-50" data-title="MainPageDown">
     <div class="post-block-wrapper">
         <div class="head education-head">
-            <h4 class="title">@Model.Name</h4>
+            <h4 class="title">@Model.MainCategoryModel.Name</h4>
         </div>
         <div class="body">
             <div class="four-row-post-carousel row-post-carousel post-block-carousel education-post-carousel">
-                @foreach (var item in Model.NewsModels)
+                @foreach (var item in Model.MainCategoryModel.NewsModels)
                 {
                     <div class="post post-small post-list education-post">
                         <div class="post-wrap">

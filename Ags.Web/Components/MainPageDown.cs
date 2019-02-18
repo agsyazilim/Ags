@@ -2,7 +2,6 @@
 using Ags.Services.Catalog;
 using Ags.Web.Factories;
 using Ags.Web.Framework.Components;
-using Ags.Web.Models.Catalog;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ags.Web.Components
@@ -24,7 +23,7 @@ namespace Ags.Web.Components
         public IViewComponentResult Invoke(string name)
         {
             var category = _categoryService.GetAllCategories(categoryName: name).FirstOrDefault();
-            var model = _catalogModelFactory.PrepareCategoryModel(new CategoriModel(), category);
+            var model = _catalogModelFactory.PrepareMainPageDownModel(category);
             return View(model);
         }
     }

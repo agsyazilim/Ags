@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Ags.Data.Domain;
-using Ags.Services.Common;
+﻿using Ags.Services.Common;
 using Ags.Services.Media;
-using Ags.Web.Areas.Admin.Models;
 using Ags.Web.Framework.Components;
-using Ags.Web.Models;
 using Ags.Web.Models.Common;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,8 +22,10 @@ namespace Ags.Web.Components
         {
             var section = _sectionService.GetByName(categoryName);
             if(section==null)
-                return Content("");
+                return View(new AdvertisementModel());
             var adv = _advertisementService.GetBySectionId(section.Id);
+            if (adv == null)
+                return View(new AdvertisementModel());
             var model = new AdvertisementModel
             {
                 Id = adv.Id,

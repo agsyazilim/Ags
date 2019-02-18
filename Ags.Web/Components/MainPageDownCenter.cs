@@ -23,7 +23,7 @@ namespace Ags.Web.Components
         public IViewComponentResult Invoke(string name)
         {
             var category = _categoryService.GetAllCategories(categoryName: name).FirstOrDefault();
-            var model = _catalogModelFactory.PrepareCategoryModel(new CategoriModel(), category);
+            var model = _catalogModelFactory.PrepareMainPageDonwCenterModel(category);
             return View(model);
         }
 

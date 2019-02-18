@@ -25,11 +25,7 @@ namespace Ags.Web.Components
         {
             var categorys = _categoryService.GetAllCategoriesDisplayedOnHomePage();
             var categoryList = categorys.Where(x => name.Contains(x.Name) & x.Published & !x.Deleted).ToList();
-            var model = new List<CategoriModel>();
-            foreach (var category in categoryList)
-            {
-                model.Add(_catalogModelFactory.PrepareCategoryModel(new CategoriModel(), category));
-            }
+            var model = _catalogModelFactory.PrepareMainPageModel(categoryList);
             return View(model);
         }
 

@@ -7,10 +7,6 @@ namespace Ags.Web.Factories
     public partial interface ICatalogModelFactory
     {
         #region Common
-
-
-
-
         /// <summary>
         /// Prepare page size options
         /// </summary>
@@ -35,8 +31,9 @@ namespace Ags.Web.Factories
         CategoriModel PrepareCategoryModel(CategoriModel model, Category category);
         CategoriModel PrepareCategoryModel(CategoriModel model, List<Category> categorys);
         PopulerSectionModel PrepareCategoryPopulerSectionModel(List<Category> categorys);
-
-
+        MainPageModel PrepareMainPageModel(List<Category> categories);
+        MainPageDownModel PrepareMainPageDownModel(Category category);
+        MainPageDownCenterModel PrepareMainPageDonwCenterModel(Category category);
         /// <summary>
         /// Prepare category template view path
         /// </summary>
