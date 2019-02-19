@@ -34,7 +34,8 @@ namespace Ags.Web.Components
                 UrlAddress = adv.UrlAddress,
                 CodeFlash = adv.CodeFlash,
                 FlashCode = adv.FlashCode,
-                Target = adv.TargetId == true ? "_parent" : ""
+                Target = adv.TargetId == true ? "_parent" : "",
+                IsApproved = adv.IsApproved
             };
             return View(model);
 

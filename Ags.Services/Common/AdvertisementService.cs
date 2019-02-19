@@ -42,8 +42,9 @@ namespace Ags.Services.Common
         public Advertisement GetBySectionId(int sectionId)
         {
             var query = _advertisementRepository.Table;
+            query = query.Where(x =>x.IsApproved==true);
             query = query.Where(x => x.SectionId == sectionId);
-            query = query.Where(x =>x.EndDate.HasValue || x.EndDate >= DateTime.UtcNow & x.IsApproved);
+            query = query.Where(x =>x.EndDate.HasValue || x.EndDate >= DateTime.UtcNow);
             var result = query.FirstOrDefault();
             return result;
         }
